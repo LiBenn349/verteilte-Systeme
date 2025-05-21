@@ -4,42 +4,42 @@ Ordnerstruktur der Abgabe <br>
 
 mein-urlaub/ <br>
 ├── bewertung-service/ <br>
-│   ├── models/ <br>
-│   │   └── bewertung.js <br>
-│   ├── routes/ <br>
-│   │   └── bewertungen.js <br>
-│   ├── app.js <br>
-│   ├── server.js <br>
-│   ├── package.json <br>
-│   └── tests/ <br>
-│       └── bewertungen.rest <br>
+|&nbsp;&nbsp;&nbsp;├── models/ <br>
+│&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;└── bewertung.js <br>
+│&nbsp;&nbsp;&nbsp;├── routes/ <br>
+│&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;└── bewertungen.js <br>
+│&nbsp;&nbsp;&nbsp;├── app.js <br>
+│&nbsp;&nbsp;&nbsp;├── server.js <br>
+│&nbsp;&nbsp;&nbsp;├── package.json <br>
+│&nbsp;&nbsp;&nbsp;└── tests/ <br>
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── bewertungen.rest <br>
 ├── hotel-service/ <br>
-│   ├── models/ <br>
-│   │   └── hotel.js <br>
-│   ├── routes/ <br>
-│   │   └── hotels.js <br>
-│   ├── app.js <br>
-│   ├── server.js <br>
-│   ├── package.json <br>
-│   └── tests/ <br>
-│       └── hotels.rest <br>
+│&nbsp;&nbsp;&nbsp;├── models/ <br>
+│&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;└── hotel.js <br>
+│&nbsp;&nbsp;&nbsp;├── routes/ <br>
+│&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;└── hotels.js <br>
+│&nbsp;&nbsp;&nbsp;├── app.js <br>
+│&nbsp;&nbsp;&nbsp;├── server.js <br>
+│&nbsp;&nbsp;&nbsp;├── package.json <br>
+│&nbsp;&nbsp;&nbsp;└── tests/ <br>
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── hotels.rest <br>
 ├── flugverbindung-service/ <br>
-│   ├── models/ <br>
-│   │   └── flugverbindung.js <br>
-│   ├── routes/ <br>
-│   │   └── flugverbindungen.js <br>
-│   ├── app.js <br>
-│   ├── server.js <br>
-│   ├── package.json <br>
-│   └── tests/ <br>
-│       └── flugverbindungen.rest <br>
+│&nbsp;&nbsp;&nbsp;├── models/ <br>
+│&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;└── flugverbindung.js <br>
+│&nbsp;&nbsp;&nbsp;├── routes/ <br>
+│&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;└── flugverbindungen.js <br>
+│&nbsp;&nbsp;&nbsp;├── app.js <br>
+│&nbsp;&nbsp;&nbsp;├── server.js <br>
+│&nbsp;&nbsp;&nbsp;├── package.json <br>
+│&nbsp;&nbsp;&nbsp;└── tests/ <br>
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── flugverbindungen.rest <br>
 └── mietwagen-service/ <br>
-    ├── models/ <br>
-    │   └── mietwagen.js <br>
-    ├── routes/ <br>
-    │   └── mietwagen.js <br>
-    ├── app.js <br>
-    ├── server.js <br>
-    ├── package.json <br>
-    └── tests/ <br>
+&nbsp;&nbsp;&nbsp;&nbsp;├── models/ <br>
+&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;└── mietwagen.js <br>
+&nbsp;&nbsp;&nbsp;&nbsp;├── routes/ <br>
+&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;└── mietwagen.js <br>
+&nbsp;&nbsp;&nbsp;&nbsp;├── app.js <br>
+&nbsp;&nbsp;&nbsp;&nbsp;├── server.js <br>
+&nbsp;&nbsp;&nbsp;&nbsp;├── package.json <br>
+&nbsp;&nbsp;&nbsp;&nbsp;└── tests/ <br>
         └── mietwagen.rest
