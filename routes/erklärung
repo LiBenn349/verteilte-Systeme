@@ -1,0 +1,57 @@
+Der "routes"-Ordner und seine Funktion:
+
+    Der "routes"-Ordner und die darin enthaltene Datei (z.B. "bewertungen.js") spielen eine zentrale Rolle in der Anwendungsstruktur. Lassen Sie mich erklären, wozu dieser angelegt wurde und welche Probleme er löst:
+    Zweck des routes-Ordners
+    Der routes-Ordner enthält die Definitionen aller API-Endpunkte (Routen) eines Microservices. Diese Dateien legen fest:
+        Welche URLs/Endpunkte der Service anbietet
+        Welche HTTP-Methoden (GET, POST, PUT, DELETE) unterstützt werden
+        Welche Aktionen bei Anfragen an diese Endpunkte ausgeführt werden
+        Wie die Antworten gestaltet werden
+
+Welches Problem löst der routes-Ordner?
+
+    Separation of Concerns (Trennung der Zuständigkeiten):
+        Die API-Endpunktlogik ist vom Rest der Anwendung getrennt
+        Jede Route hat eine klare, definierte Aufgabe
+
+    Übersichtlichkeit und Wartbarkeit:
+        Alle API-Endpunkte sind an einem Ort gebündelt
+        Neue Entwickler können schnell verstehen, welche Funktionen der Service bietet
+
+    Modularität:
+        Verschiedene Routengruppen können in separate Dateien aufgeteilt werden
+        Erleichtert die Arbeit in Teams, da verschiedene Personen an verschiedenen Routen arbeiten können
+
+    Testbarkeit:
+        Routen können isoliert getestet werden
+        Die .rest-Dateien im tests-Ordner beziehen sich direkt auf diese Routen
+
+
+Beispiel anhand der bewertung.js:
+Konkrete Probleme, die gelöst werden:
+
+    Routing-Management:
+        Express.js benötigt eine Struktur, um HTTP-Anfragen an bestimmte Funktionen weiterzuleiten
+        Die routes-Dateien definieren genau, welche URL welche Funktion auslöst
+
+
+    Anforderung aus der Aufgabenstellung: "CRUD per API":
+        Die routes-Dateien implementieren genau dieses CRUD (Create, Read, Update, Delete) über API-Endpunkte
+        GET (Lesen), POST (Erstellen), PUT (Aktualisieren), DELETE (Löschen)
+
+
+    Berechtigungssteuerung:
+        Gemäß Anforderung: "User kann nur lesen" und "Admin kann lesen, erstellen, aktualisieren, löschen"
+        Die isAdmin-Middleware in den routes-Dateien setzt genau diese Berechtigungslogik um
+
+
+    Fehlerbehandlung:
+        Die routes-Dateien enthalten strukturierte Fehlerbehandlung mit try/catch-Blöcken
+        Korrekte HTTP-Statuscodes werden zurückgegeben (z.B. 400 für ungültige Anfragen, 404 für nicht gefundene Ressourcen)
+
+
+    Komplexe Abfragen:
+        Die routes ermöglichen komplexe Abfragen wie Filterung, Sortierung und Paginierung der Daten
+
+
+Ohne den routes-Ordner und die entsprechenden Dateien müssten all diese Logiken direkt in app.js oder anderen Dateien implementiert werden, was zu einem unübersichtlichen, schwer wartbaren "Spaghetti-Code" führen würde, der schwer zu verstehen, zu erweitern und zu testen wäre.

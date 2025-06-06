@@ -1,0 +1,19 @@
+Der "models"-Ordner enthält die Datenbankmodelle für die Anwendung. In unserem Projekt "Mein Urlaub" definieren diese Dateien die Struktur der Daten, die in der MongoDB-Datenbank gespeichert werden.
+Jede Datei im "models"-Ordner entspricht einer Sammlung (Collection) in der MongoDB und definiert:
+
+Das Schema (die Struktur der Daten)
+Validierungsregeln
+Indizes für effiziente Abfragen
+Virtuelle Felder oder Methoden (falls erforderlich)
+
+Erklären der Datei
+
+1. Importiert Mongoose (die MongoDB-ODM-Bibliothek)
+2. Definiert ein Schema für Bewertungen mit verschiedenen Feldern und deren    Typen und Validierungsregeln
+3. Legt fest, dass bestimmte Felder pflichtmäßig ausgefüllt werden müssen (required: true)
+4. Setzt Validierungsregeln (z.B. Bewertung zwischen 1 und 5)
+5. Erstellt einen Index für schnellere Abfragen
+6. Wandelt das Schema in ein Mongoose-Modell um
+7. Exportiert das Modell, damit es in anderen Teilen der Anwendung verwendet werden kann
+
+Kurz gesagt: Die Dateien im models-Ordner definieren die Struktur und Regeln für die Daten, mit denen die Anwendung arbeitet.
