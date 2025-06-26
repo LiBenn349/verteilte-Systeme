@@ -6,9 +6,7 @@
 - MongoDB
 - Node.js
 
-
-### Terminalbefehle in VS Code: --> muss in jedem Microservice gemacht werden
-
+### Terminalbefehle in VS Code:
  1. gucke ob du im richtigen Ordner bist. Immer da wo auch die Server-Datei liegt, müssen auch die Befehle ausgeführt werden --> cd Ordnername
  2. npm init -y
  3. npm install cors jsonwebtoken express mongoose node-fetch dotenv
