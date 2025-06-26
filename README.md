@@ -5,7 +5,6 @@
 ## Software:
 - MongoDB
 - Node.js
-----------------------------------------
 
 
 ### Terminalbefehle in VS Code: --> muss in jedem Microservice gemacht werden
