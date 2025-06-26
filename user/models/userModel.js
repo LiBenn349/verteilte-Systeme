@@ -1,7 +1,27 @@
-// Simulierter User
-module.exports = {
-    id: 1,
-    username: "testuser",
-    password: "password123" // Niemals im Klartext speichern! Hier nur zur Demo.
-  };
-  
+const mongoose = require('mongoose');
+
+const UserModel = new mongoose.Schema({
+  id: { 
+    type: mongoose.Schema.Types.ObjectId, 
+    required: true,
+    unique: true 
+  },
+  username: { 
+    type: String, 
+    required: true,
+    unique: true
+  },
+  password: { 
+    type: String, 
+    required: true 
+  },
+  role: { 
+    type: String, 
+    required: true, 
+    enum: ['admin', 'user'],
+    default: 'user'
+  },
+
+});
+
+module.exports = mongoose.model('User', UserModel);
