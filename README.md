@@ -2,7 +2,7 @@
 
 ## Benötigte Installationen für fehlerlose Ausführung des Codes
 
-## Software:
+### Software:
 - MongoDB
 - Node.js
 
