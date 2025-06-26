@@ -15,9 +15,9 @@
  3. npm install cors jsonwebtoken express mongoose node-fetch dotenv
  4. npm install -g nodemon
  5. nodemon DateinameServer.js
-=> Schritte 1. bis 3. müssen in jedem Microservice Ordner wiederholt werden, damit in jedem Ordner auch die package.json Dateien und so sind
 
-
+Schritte 1. bis 3. müssen in jedem Microservice Ordner wiederholt werden, damit in jedem Ordner auch die package.json Dateien und so sind
+Schritt 5. muss auch in jedem Microserver gemacht werden, denn er startet den Server
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 
