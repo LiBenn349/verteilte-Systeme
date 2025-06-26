@@ -1,19 +1,21 @@
 # mein-Urlaub
 
-Benötigte Installationen für fehlerlose Ausführung des Codes
+## Benötigte Installationen für fehlerlose Ausführung des Codes
 
-Software:
+## Software:
 - MongoDB
 - Node.js
+----------------------------------------
 
-Terminalbefehle in VS Code: --> muss in jedem Microservice gemacht werden
-1. gucke ob du im richtigen Ordner bist. Immer da wo auch die Server-Datei liegt, müssen auch die Befehle ausgeführt werden --> cd Ordnername
-2. npm init -y
-3. npm install cors jsonwebtoken express mongoose node-fetch dotenv
-4. npm install -g nodemon
-5. nodemon DateinameServer.js
 
-Schritte 1. bis 3. müssen in jedem Microservice Ordner wiederholt werden, damit in jedem Ordner auch die package.json Dateien und so sind
+### Terminalbefehle in VS Code: --> muss in jedem Microservice gemacht werden
+
+ 1. gucke ob du im richtigen Ordner bist. Immer da wo auch die Server-Datei liegt, müssen auch die Befehle ausgeführt werden --> cd Ordnername
+ 2. npm init -y
+ 3. npm install cors jsonwebtoken express mongoose node-fetch dotenv
+ 4. npm install -g nodemon
+ 5. nodemon DateinameServer.js
+=> Schritte 1. bis 3. müssen in jedem Microservice Ordner wiederholt werden, damit in jedem Ordner auch die package.json Dateien und so sind
 
 
 
