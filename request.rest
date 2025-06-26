@@ -1,0 +1,48 @@
+### 1. Login beim User-Service (Login korrekt)
+POST http://localhost:3004/user
+Content-Type: application/json
+
+{
+  "username": "test",
+  "password": "test2"
+}
+
+### 2. Login mit falschem Passwort (soll 401 liefern)
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+  "username": "test",
+  "password": "falsch"
+}
+
+### 3. (Falls du Registrierung hast – optional)
+POST http://localhost:3000/register
+Content-Type: application/json
+
+{
+  "username": "neuerUser",
+  "password": "geheim"
+}
+
+### 4. Flüge lesen mit gültigem Token (manuell einfügen)
+GET http://localhost:3001/
+Authorization: Bearer <HIER_TOKEN_EINFÜGEN>
+
+### 5. Flug erstellen (mit gültigem Token)
+POST http://localhost:3001/
+Content-Type: application/json
+Authorization: Bearer <HIER_TOKEN_EINFÜGEN>
+
+{
+  "serviceId": "flug123",
+  "flugNummer": "LH1234",
+  "startOrt": "Berlin",
+  "zielOrt": "Wien",
+  "flugGesellschaft": "Lufthansa",
+  "beschreibung": "Direktflug",
+  "preis": 199
+}
+
+### 6. Flug lesen ohne Token (soll 401 liefern)
+GET http://localhost:3001/
