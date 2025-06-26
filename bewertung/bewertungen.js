@@ -32,10 +32,8 @@ db.once('open',() => console.log("Server hat Verbindung zur DB " + dburl + " erf
 
 const bewertungRouter = require('./routes/bewertungRouter');//Router laden
 app.use('/', bewertungRouter);//Router unter dem vorne angegebenen Pfad verfügbar machen
-const authRouter = require('./routes/authRouter');
-app.use('/auth', authRouter); // z. B. erreichbar unter /auth/login
-
-
+const user = require('./routes/userRouter');//Router laden
+app.use('/', user);//Router unter dem vorne angegebenen Pfad verfügbar machen
 
 //Server starten
 app.listen(port, () => {
