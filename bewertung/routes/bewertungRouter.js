@@ -1,8 +1,6 @@
 //ALLE ENDPOINTS ZUM PRODUKT LANDEN IN DIESER DATEI 
 const express = require('express'); //Laden der Libraries 
 const bewertungsModel = require('../models/bewertungModel');
-const { authenticateToken, requireAdmin } = require('../authUser/userMiddelware');
-
 
 //ACHTUNG --> hier keine "normale Express Initialisierung"
 const router = express.Router();
@@ -20,7 +18,7 @@ router.use(express.json());
 
 
 //    1. Alle Bewertungen lesen
-router.get('/',authenticateToken, async (req, res) => {
+router.get('/', async (req, res) => {
     try{
 
         //Alle Bewertungen vom Model finden
@@ -34,12 +32,12 @@ router.get('/',authenticateToken, async (req, res) => {
 
 
 //    2. Ein bestimmtes Rating anhand seiner (ID) finden
-router.get("/:id", authenticateToken, getRatingByID, (req,res) => {
+router.get("/:id", getRatingByID, (req,res) => {
     res.status(200).json(res.bewertung); //aus der MiddleWare Funktion getRatingByID wurde in res.bewertung bereits das eine bestimmtes Bewertung "reingeschrieben"
 })
 
 //  2a Ein bestimmtes Bewertung anhand einer bestimmten ServiceID finden
-router.get('/ofService/:ID', authenticateToken, async (req, res) => {
+router.get('/ofService/:ID', async (req, res) => {
     //Hier soll anhand der übergebenen ServiceID nur die Bewertungen gezogen werden, die dieser ServiceID entsprechen
     try{
         const bewertung = await bewertungsModel.find({ID: req.params.ID});
@@ -54,7 +52,7 @@ router.get('/ofService/:ID', authenticateToken, async (req, res) => {
 })
 
 //    3. Ein bestimmtes Rating schreiben 
-router.post('/', authenticateToken, async(req, res) => {
+router.post('/', async(req, res) => {
     try{
 
         //Erstellen eines neuen Ratings
@@ -79,7 +77,7 @@ router.post('/', authenticateToken, async(req, res) => {
 
 
 //    4. Ein bestimmtes Rating updaten (ID)
-router.put('/:id',authenticateToken, getRatingByID, async(req, res) => {
+router.put('/:id', getRatingByID, async(req, res) => {
     try{
         //Das Product mit der übergebenen ID steht in res.product durch die Middleware Funktion bereit
         //Wir updaten es mit den Werten aus dem Request
