@@ -4,6 +4,7 @@ require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const app = express();
 
+
 const port = process.env.PORT;
 const secret = process.env.SECRET;
 const dburl = process.env.DBURL;
@@ -38,9 +39,13 @@ const users = [
     }
 ]
 
-const router = require('./routes/userRouter');
-app.use('/', router);
+// Router einbinden
+const createUserRouter = require('./routes/userRouter');
+const userRouter = createUserRouter(secret, users);
+app.use('/', userRouter);
 
+// Server starten
 app.listen(port, () => {
-    console.log("Server gestartet auf Port: " + port);
-})
+  console.log(`Server läuft auf http://localhost:${port}`);
+});
+
