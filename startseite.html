@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Startseite</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="p-4">
+
+  <div class="container">
+
+    <!-- LOGIN-Bereich -->
+    <div id="loginSection">
+      <h1 class="mb-4">Login</h1>
+      <form id="loginForm" class="mb-4">
+        <div class="mb-3">
+          <input type="text" class="form-control" id="username" placeholder="Benutzername" required>
+        </div>
+        <div class="mb-3">
+          <input type="password" class="form-control" id="password" placeholder="Passwort" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Login</button>
+      </form>
+      <div id="loginError" class="text-danger"></div>
+    </div>
+
+    <!-- HAUPT-INHALT (sichtbar nur nach Login) -->
+    <div id="mainContent" style="display: none;">
+      <h2>Willkommen auf der Startseite!</h2>
+      <p>Nur sichtbar nach erfolgreichem Login!</p>
+
+      <button id="geheimnisBtn" class="btn btn-success mb-2">Geheimnis abrufen</button>
+      <div id="geheimnisOutput" class="text-success fw-bold mb-3"></div>
+
+      <button id="logoutBtn" class="btn btn-danger">Logout</button>
+    </div>
+
+  </div>
+
+  <script>
+    // Beim Laden prüfen, ob Token existiert
+    document.addEventListener("DOMContentLoaded", function () {
+      const token = localStorage.getItem("token");
+      if (token) {
+        showMainContent();
+      } else {
+        showLogin();
+      }
+    });
+
+    // Login-Formular senden
+    document.getElementById("loginForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+
+      try {
+        const response = await fetch("http://localhost:3000/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, password })
+        });
+
+        if (!response.ok) {
+          document.getElementById("loginError").textContent = "Login fehlgeschlagen!";
+          return;
+        }
+
+        const token = await response.json();
+        localStorage.setItem("token", token);
+        showMainContent();
+      } catch (err) {
+        console.error("Login-Fehler:", err);
+      }
+    });
+
+    // Geheimnis abrufen
+    document.getElementById("geheimnisBtn").addEventListener("click", async function () {
+      const token = localStorage.getItem("token");
+
+      const res = await fetch("http://localhost:3000/geheimnis", {
+        headers: { Authorization: "Bearer " + token }
+      });
+
+      const data = await res.json();
+      document.getElementById("geheimnisOutput").textContent = data.geheimnis || "Kein Geheimnis gefunden";
+    });
+
+    // Logout
+    document.getElementById("logoutBtn").addEventListener("click", function () {
+      localStorage.removeItem("token");
+      showLogin();
+    });
+
+    // UI umschalten
+    function showMainContent() {
+      document.getElementById("loginSection").style.display = "none";
+      document.getElementById("mainContent").style.display = "block";
+    }
+
+    function showLogin() {
+      document.getElementById("loginSection").style.display = "block";
+      document.getElementById("mainContent").style.display = "none";
+      document.getElementById("loginForm").reset();
+      document.getElementById("loginError").textContent = "";
+    }
+  </script>
+
+</body>
+</html>
