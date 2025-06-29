@@ -41,7 +41,7 @@ function checkAdmin(req, res, next) {
     return res.status(403).json({ message: 'Nur Admins dürfen diese Aktion durchführen' });
   }
   next();
-
+}
 //    1. Alle Produkte lesen
 router.get('/', authMiddleware, async (req, res) => {
     try{
