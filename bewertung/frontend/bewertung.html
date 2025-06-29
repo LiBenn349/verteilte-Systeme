@@ -4,82 +4,143 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Mein Urlaub - Bewertung</title>
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-  />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
   <style>
-    html, body {
-      height: 100%;
-      margin: 0;
-      background-color: #f1f1f1; /* Heller Hintergrund */
-    }
-
     body {
+      background: linear-gradient(to right, #dbeafe, #e0f2fe);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
     }
 
-    main {
-      flex: 1;
+    /* Navbar */
+    .navbar {
+      background-color: #3b82f6;
     }
 
+    .navbar-brand, .nav-link, .navbar-text {
+      color: white !important;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    .nav-link:hover, .navbar-brand:hover {
+      color: #bfdbfe !important;
+      text-decoration: underline;
+    }
+
+    .navbar-collapse {
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Header */
     .header {
-      background: linear-gradient(to right, #6c757d, #adb5bd); /* Grauer Verlauf */
-      color: white;
-      padding: 60px 0;
+      padding: 3rem 1rem;
       text-align: center;
+      color: #1e40af;
+      max-width: 700px;
+      margin: 2rem auto 3rem;
     }
 
+    .header h1 {
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .header p.lead {
+      font-size: 1.2rem;
+      color: #2563eb;
+      font-weight: 500;
+    }
+
+    /* Bewertungsformular */
     .card {
-      max-width: 500px;
-      margin: 30px auto;
-      padding: 20px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+      max-width: 520px;
+      margin: 0 auto 3rem;
+      padding: 2rem 2.5rem;
+      border-radius: 15px;
+      box-shadow: 0 6px 18px rgba(59, 130, 246, 0.2);
       background-color: white;
-      border: none;
-      border-radius: 10px;
+      transition: box-shadow 0.3s ease;
     }
 
-    .navbar-brand {
-      font-weight: bold;
+    .card:hover {
+      box-shadow: 0 10px 28px rgba(59, 130, 246, 0.35);
     }
 
-    footer {
-      background-color: #dee2e6;
-      padding: 15px 0;
-      text-align: center;
+    .card h4 {
+      color: #1e3a8a;
+      margin-bottom: 1.5rem;
+      font-weight: 700;
+    }
+
+    input#name, textarea#bewertung {
+      border-radius: 8px;
+      border: 1.5px solid #93c5fd;
+      transition: border-color 0.3s ease;
+    }
+
+    input#name:focus, textarea#bewertung:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 8px rgba(59, 130, 246, 0.4);
+      outline: none;
     }
 
     .btn-secondary {
-      background-color: #6c757d;
-      border-color: #6c757d;
+      background-color: #3b82f6;
+      border-color: #3b82f6;
+      font-weight: 600;
+      border-radius: 8px;
+      padding: 0.6rem 1.2rem;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
     }
 
     .btn-secondary:hover {
-      background-color: #5a6268;
-      border-color: #545b62;
+      background-color: #2563eb;
+      border-color: #2563eb;
+    }
+
+    /* Responsive */
+    @media (max-width: 576px) {
+      .header {
+        padding: 2rem 1rem;
+        max-width: 90%;
+      }
+
+      .card {
+        padding: 1.5rem 1.8rem;
+        margin-bottom: 2rem;
+      }
     }
   </style>
 </head>
 <body>
-
-  <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
-    <div class="container">
-      <a class="navbar-brand" href="#">Urlaub bewerten</a>
-    </div>
-  </nav>
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/startseite.html">Jet3Holiday</a>
+          <div class="collapse navbar-collapse">
+            <ul class="navbar-nav me-auto">
+              <li class="nav-item"><a class="nav-link" href="/flugverbindung/frontend/flugverbindung.html">Flugverbindung</a></li>
+              <li class="nav-item"><a class="nav-link" href="/mietwagen/frontend/mietwagen.html">Mietwagen buchen</a></li>
+              <li class="nav-item"><a class="nav-link" href="/hotel/frontend/hotel.html">Hotel suchen</a></li>
+              <li class="nav-item"><a class="nav-link" href="bewertung.html">Bewertungen</a></li>
+            </ul>
+            <span class="navbar-text" id="roleInfo"></span>
+            <button id="logoutBtn" class="btn btn-danger btn-sm ms-3">Logout</button>
+          </div>
+        </div>
+      </nav>
 
   <!-- Hauptinhalt -->
-  <main>
+  <main class="flex-grow-1">
     <!-- Header -->
-    <div class="header">
-      <div class="container">
-        <h1 class="display-5">Teile deine Urlaubserfahrung</h1>
-        <p class="lead">Hilf anderen mit deiner ehrlichen Bewertung</p>
-      </div>
-    </div>
+    <section class="header">
+      <h1>Teile deine Urlaubserfahrung</h1>
+      <p class="lead">Hilf anderen mit deiner ehrlichen Bewertung</p>
+    </section>
 
     <!-- Bewertungsformular -->
     <div class="container">
@@ -98,14 +159,8 @@
     </div>
   </main>
 
-  <!-- Footer -->
-  <footer>
-    <div class="container">
-      <small>&copy; 2025 Mein Urlaub – Bewertungsplattform</small>
-    </div>
-  </footer>
-
-  
+</body>
+ 
   <script>
     function sendeBewertung() {
       const bewertung = {
@@ -134,5 +189,4 @@
       });
     }
   </script>
-</body>
 </html>
