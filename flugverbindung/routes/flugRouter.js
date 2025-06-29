@@ -2,8 +2,8 @@
 
 const express = require('express');
 const flugModel = require('../models/flugModel');
-const auth = require('../middleware/authMiddleware'); //Importiere die Authentifizierungs-Middleware, falls benötigt
-const authMiddleware = require('../middleware/authMiddleware');
+
+
 
 //ACHTUNG --> hier keine "normale" express Iniitialisierung
 const router = express.Router();
@@ -18,6 +18,32 @@ router.use(express.json());
     4. Ein bestimmtes Produkt updaten
     5. Ein bestimmtes Produkt löschen
 */
+
+// middlewares/authMiddleware.js
+const jwt = require('jsonwebtoken');
+const SECRET = process.env.SECRET; // Das gleiche Secret wie im User-Service
+
+function authMiddleware(req, res, next) {
+    const authHeader = req.headers.authorization;
+    if (!authHeader) return res.status(401).json({ message: 'Token fehlt' });
+
+    const token = authHeader.split(' ')[1];
+    try {
+        const decoded = jwt.verify(token, SECRET);
+        req.user = { userID: decoded.userID, rolle: decoded.rolle };
+        next();
+    } catch (err) {
+        return res.status(403).json({ message: 'Token ungültig' });
+    }
+}
+
+
+function checkAdmin(req, res, next) {
+  if (!req.user || !req.user.isAdmin) {
+    return res.status(403).json({ message: 'Nur Admins dürfen diese Aktion durchführen' });
+  }
+  next();
+}
 
 //    1. Alle Produkte lesen
 router.get('/', authMiddleware, async (req, res) => {
@@ -38,7 +64,7 @@ router.get("/:id", authMiddleware, getFlugByID, (req,res) => {
 })
 
 //    3. Ein bestimmtes Produkt schreiben 
-router.post('/', authMiddleware, async(req, res) => {
+router.post('/', authMiddleware, checkAdmin, async(req, res) => {
     try{
 
         //Erstellen eines neuen Products
@@ -63,7 +89,7 @@ router.post('/', authMiddleware, async(req, res) => {
 })
 
 //    4. Ein bestimmtes Produkt updaten (ID)
-router.put('/:id', authMiddleware, getFlugByID, async(req, res) => {
+router.put('/:id', authMiddleware, checkAdmin, getFlugByID, async(req, res) => {
     try{
         //Das Product mit der übergebenen ID steht in res.product durch die Middleware Funktion bereit
         //Wir updaten es mit den Werten aus dem Request
@@ -103,7 +129,7 @@ router.put('/:id', authMiddleware, getFlugByID, async(req, res) => {
     }
 })
 
-router.delete('/:id', authMiddleware, getFlugByID, async(req, res) => {
+router.delete('/:id', authMiddleware, checkAdmin, getFlugByID, async(req, res) => {
     try{
         const deletedFlug = await flugModel.deleteOne(res.flug) //unser Product aus der MiddleWare Funktion soll gelöscht werden
         res.status(200).json({deletedFlug});
