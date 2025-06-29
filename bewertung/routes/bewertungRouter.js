@@ -16,6 +16,31 @@ router.use(express.json());
     5. Eine bestimmte Bewertung löschen (ID)
 */
 
+// middlewares/authMiddleware.js
+const jwt = require('jsonwebtoken');
+const SECRET = process.env.SECRET; // Das gleiche Secret wie im User-Service
+
+function authMiddleware(req, res, next) {
+    const authHeader = req.headers.authorization;
+    if (!authHeader) return res.status(401).json({ message: 'Token fehlt' });
+
+    const token = authHeader.split(' ')[1];
+    try {
+        const decoded = jwt.verify(token, SECRET);
+        req.user = { userID: decoded.userID, rolle: decoded.rolle };
+        next();
+    } catch (err) {
+        return res.status(403).json({ message: 'Token ungültig' });
+    }
+}
+
+
+function checkAdmin(req, res, next) {
+  if (!req.user || !req.user.isAdmin) {
+    return res.status(403).json({ message: 'Nur Admins dürfen diese Aktion durchführen' });
+  }
+  next();
+}
 
 //    1. Alle Bewertungen lesen
 router.get('/', async (req, res) => {
@@ -32,7 +57,7 @@ router.get('/', async (req, res) => {
 
 
 //    2. Ein bestimmtes Rating anhand seiner (ID) finden
-router.get("/:id", getRatingByID, (req,res) => {
+router.get("/:id", authMiddleware, getRatingByID, (req,res) => {
     res.status(200).json(res.bewertung); //aus der MiddleWare Funktion getRatingByID wurde in res.bewertung bereits das eine bestimmtes Bewertung "reingeschrieben"
 })
 
@@ -52,7 +77,7 @@ router.get('/ofService/:ID', async (req, res) => {
 })
 
 //    3. Ein bestimmtes Rating schreiben 
-router.post('/', async(req, res) => {
+router.post('/', authMiddleware, async(req, res) => {
     try{
 
         //Erstellen eines neuen Ratings
@@ -77,7 +102,7 @@ router.post('/', async(req, res) => {
 
 
 //    4. Ein bestimmtes Rating updaten (ID)
-router.put('/:id', getRatingByID, async(req, res) => {
+router.put('/:id', authMiddleware, getRatingByID, async(req, res) => {
     try{
         //Das Product mit der übergebenen ID steht in res.product durch die Middleware Funktion bereit
         //Wir updaten es mit den Werten aus dem Request
@@ -114,7 +139,7 @@ router.put('/:id', getRatingByID, async(req, res) => {
     }
 })
 
-router.delete('/:id', getRatingByID, async(req, res) => {
+router.delete('/:id', authMiddleware, getRatingByID, async(req, res) => {
     try{
         const deletedBewertung = await bewertungsModel.deleteOne(res.bewertung) //unser Product aus der MiddleWare Funktion soll gelöscht werden
         res.status(200).json({deletedBewertung});
