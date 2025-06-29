@@ -1,45 +1,262 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <title>Mietwagen-Service</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jet3Holiday – Mietwagen</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      background: linear-gradient(to right, #dbeafe, #e0f2fe);
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .navbar {
+      background-color: #3b82f6;
+    }
+
+    .navbar-brand, .nav-link, .navbar-text {
+      color: white !important;
+      font-weight: 500;
+    }
+
+    .nav-link:hover {
+      text-decoration: underline;
+    }
+
+    h1 {
+      color: #1e40af;
+      margin-top: 1.5rem;
+    }
+
+    #adminSection, #carsList {
+      background-color: #ffffffd9;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    form {
+      background-color: #f1f5f9;
+      padding: 1rem;
+      border-radius: 10px;
+    }
+
+    .btn-primary {
+      background-color: #2563eb;
+      border-color: #2563eb;
+    }
+
+    .btn-primary:hover {
+      background-color: #1e40af;
+      border-color: #1e40af;
+    }
+
+    .btn-success {
+      background-color: #10b981;
+      border-color: #10b981;
+    }
+
+    .btn-success:hover {
+      background-color: #047857;
+      border-color: #047857;
+    }
+
+    .btn-danger {
+      background-color: #ef4444;
+      border-color: #ef4444;
+    }
+
+    .btn-danger:hover {
+      background-color: #b91c1c;
+      border-color: #b91c1c;
+    }
+  </style>
 </head>
-<body class="p-4">
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/startseite.html">Jet3Holiday</a>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item"><a class="nav-link" href="/flugverbindung/frontend/flugverbindung.html">Flugverbindung</a></li>
+          <li class="nav-item"><a class="nav-link" href="mietwagen.html">Mietwagen buchen</a></li>
+          <li class="nav-item"><a class="nav-link" href="/hotel/frontend/hotel.html">Hotel suchen</a></li>
+          <li class="nav-item"><a class="nav-link" href="/bewertung/frontend/bewertung.html">Bewertungen</a></li>
+        </ul>
+        <span class="navbar-text" id="roleInfo"></span>
+        <button id="logoutBtn" class="btn btn-danger btn-sm ms-3">Logout</button>
+      </div>
+    </div>
+  </nav>
 
-  <div class="container">
-    <h1 class="mb-4">Mietwagen-Verwaltung</h1>
+  <div class="container mt-4">
+    <h1>Mietwagen</h1>
 
-    <!-- Formular -->
-    <form id="mietwagenForm" class="row g-3 mb-4">
-      <div class="col-md-2"><input type="text" class="form-control" name="autoID" placeholder="Auto-ID" required></div>
-      <div class="col-md-2"><input type="text" class="form-control" name="autoMarke" placeholder="Marke" required></div>
-      <div class="col-md-2"><input type="text" class="form-control" name="autoModell" placeholder="Modell" required></div>
-      <div class="col-md-2"><input type="number" class="form-control" name="baujahr" placeholder="Baujahr" required></div>
-      <div class="col-md-2"><input type="number" class="form-control" name="preis" placeholder="Preis (€)" required></div>
-      <div class="col-md-2"><input type="text" class="form-control" name="beschreibung" placeholder="Beschreibung" required></div>
-      <div class="col-12"><button type="submit" class="btn btn-primary">Hinzufügen</button></div>
-    </form>
+    <!-- Admin Bereich -->
+    <div id="adminSection" style="display:none;">
+      <button id="addCarBtn" class="btn btn-success mb-3">Mietwagen anlegen</button>
 
-    <!-- Tabelle -->
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>Auto-ID</th>
-          <th>Marke</th>
-          <th>Modell</th>
-          <th>Baujahr</th>
-          <th>Preis</th>
-          <th>Beschreibung</th>
-          <th>Aktion</th>
-        </tr>
-      </thead>
-      <tbody id="tableBody"></tbody>
-    </table>
+      <form id="addCarForm" style="display:none;">
+        <div class="mb-3">
+          <label for="autoID" class="form-label">Auto-ID</label>
+          <input type="text" class="form-control" id="autoID" required>
+        </div>
+        <div class="mb-3">
+          <label for="autoMarke" class="form-label">Marke</label>
+          <input type="text" class="form-control" id="autoMarke" required>
+        </div>
+        <div class="mb-3">
+          <label for="autoModell" class="form-label">Modell</label>
+          <input type="text" class="form-control" id="autoModell" required>
+        </div>
+        <div class="mb-3">
+          <label for="baujahr" class="form-label">Baujahr</label>
+          <input type="number" class="form-control" id="baujahr" required>
+        </div>
+        <div class="mb-3">
+          <label for="beschreibung" class="form-label">Beschreibung</label>
+          <textarea class="form-control" id="beschreibung" required></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="preis" class="form-label">Preis (€)</label>
+          <input type="number" class="form-control" id="preis" min="0" step="0.01" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Mietwagen anlegen</button>
+      </form>
+      <div id="addCarMsg" class="mt-2"></div>
+    </div>
+
+    <!-- Mietwagenliste -->
+    <div id="carsList" class="mt-4">
+      <!-- Mietwagen werden hier geladen -->
+    </div>
   </div>
+</body>
 
-  <!-- DEIN SCRIPT -->
-  <script src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        window.location.href = '/startseite.html';
+        return;
+      }
+
+      const isAdmin = localStorage.getItem('isAdmin') === 'true';
+      document.getElementById('roleInfo').textContent = isAdmin ? 'Admin' : 'Benutzer';
+
+      if (isAdmin) {
+        document.getElementById('adminSection').style.display = 'block';
+      }
+
+      document.getElementById('logoutBtn').addEventListener('click', () => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('isAdmin');
+        window.location.href = '/startseite.html';
+      });
+
+      document.getElementById('addCarBtn').addEventListener('click', () => {
+        const form = document.getElementById('addCarForm');
+        form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        document.getElementById('addCarMsg').textContent = '';
+      });
+
+      document.getElementById('addCarForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const autoID = document.getElementById('autoID').value.trim();
+        const autoMarke = document.getElementById('autoMarke').value.trim();
+        const autoModell = document.getElementById('autoModell').value.trim();
+        const baujahr = parseInt(document.getElementById('baujahr').value);
+        const beschreibung = document.getElementById('beschreibung').value.trim();
+        const preis = parseFloat(document.getElementById('preis').value);
+
+        if (!autoID || !autoMarke || !autoModell || !beschreibung || isNaN(baujahr) || isNaN(preis)) {
+          document.getElementById('addCarMsg').textContent = 'Bitte alle Felder korrekt ausfüllen.';
+          document.getElementById('addCarMsg').style.color = 'red';
+          return;
+        }
+
+        try {
+          const response = await fetch('http://localhost:3000', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + token
+            },
+            body: JSON.stringify({ autoID, autoMarke, autoModell, baujahr, beschreibung, preis })
+          });
+
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Fehler beim Anlegen');
+          }
+
+          document.getElementById('addCarMsg').textContent = 'Mietwagen erfolgreich angelegt!';
+          document.getElementById('addCarMsg').style.color = 'green';
+          document.getElementById('addCarForm').reset();
+          document.getElementById('addCarForm').style.display = 'none';
+
+          ladeMietwagen(token);
+        } catch (err) {
+          document.getElementById('addCarMsg').textContent = err.message;
+          document.getElementById('addCarMsg').style.color = 'red';
+          console.error(err);
+        }
+      });
+
+      ladeMietwagen(token);
+    });
+
+    async function ladeMietwagen(token) {
+      try {
+        const res = await fetch('http://localhost:3000', {
+          headers: { 'Authorization': 'Bearer ' + token }
+        });
+        if (!res.ok) throw new Error('Fehler beim Laden');
+        const mietwagenListe = await res.json();
+
+        const carsList = document.getElementById('carsList');
+        carsList.innerHTML = '';
+
+        if (mietwagenListe.length === 0) {
+          carsList.innerHTML = '<p>Keine Mietwagen verfügbar.</p>';
+          return;
+        }
+
+        mietwagenListe.forEach(wagen => {
+          const col = document.createElement('div');
+          col.className = 'col-md-4';
+
+          const card = document.createElement('div');
+          card.className = 'card h-100';
+
+          const cardBody = document.createElement('div');
+          cardBody.className = 'card-body';
+
+          const title = document.createElement('h5');
+          title.className = 'card-title';
+          title.textContent = `${wagen.autoMarke} ${wagen.autoModell} (${wagen.baujahr})`;
+
+          const desc = document.createElement('p');
+          desc.className = 'card-text';
+          desc.textContent = wagen.beschreibung;
+
+          const price = document.createElement('p');
+          price.className = 'card-text fw-bold text-primary';
+          price.textContent = `${wagen.preis.toFixed(2)} €`;
+
+          cardBody.append(title, desc, price);
+          card.appendChild(cardBody);
+          col.appendChild(card);
+          carsList.appendChild(col);
+        });
+      } catch (err) {
+        document.getElementById('carsList').innerHTML = '<p class="text-danger">Fehler beim Laden der Mietwagen.</p>';
+        console.error(err);
+      }
+    }
+  </script>
+
 </body>
 </html>
-
