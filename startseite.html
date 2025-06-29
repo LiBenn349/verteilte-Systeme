@@ -3,45 +3,60 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Jet3Holiday - Login</title>
+  <title>Jet3Holiday - Social Travel</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <style>
     html, body {
       height: 100%;
       margin: 0;
-      background: linear-gradient(to bottom right, #f8f9fa, #dee2e6);
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #e0f7fa, #e1f5fe);
     }
 
-    body {
-      display: flex;
-      flex-direction: column;
-    }
-
-    main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+    .navbar {
+      background-color: #0288d1 !important;
     }
 
     .navbar-brand {
       font-weight: bold;
-      font-size: 1.5rem;
+      font-size: 1.6rem;
+      color: #fff !important;
+    }
+
+    .navbar-nav .nav-link {
+      color: #ffffff !important;
+      font-weight: 500;
+    }
+
+    .navbar-nav .nav-link:hover {
+      text-decoration: underline;
+    }
+
+    .header {
+      text-align: center;
+      padding: 60px 20px;
+      background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80') no-repeat center center;
+      background-size: cover;
+      color: white;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
     }
 
     .card {
       max-width: 450px;
       margin: auto;
       border: none;
-      border-radius: 16px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      border-radius: 1rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
     }
 
-    .header {
-      background: linear-gradient(to right, #0d6efd, #6c757d);
-      color: white;
-      padding: 60px 20px;
-      text-align: center;
+    .btn-custom {
+      background-color: #0288d1;
+      border: none;
+    }
+
+    .btn-custom:hover {
+      background-color: #0277bd;
     }
 
     footer {
@@ -51,48 +66,44 @@
       font-size: 0.9rem;
     }
 
-    .btn-secondary {
-      background-color: #6c757d;
-      border: none;
-    }
-
-    .btn-secondary:hover {
-      background-color: #5c636a;
-    }
-
-    .btn-success {
-      background-color: #198754;
-    }
-
-    .btn-danger {
-      background-color: #dc3545;
-    }
-
-    #mainContent h2 {
-      margin-bottom: 1rem;
+    #mainContent .btn {
+      margin-bottom: 0.5rem;
     }
   </style>
 </head>
 
 <body>
   <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
+  <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
     <div class="container">
       <a class="navbar-brand" href="#">Jet3Holiday</a>
-      <p class="text-white mb-0" id="roleInfo"></p>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navItems">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navItems">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link" href="flugverbindung/frontend/flugverbindung.html"><i class="bi bi-airplane"></i> Flüge</a></li>
+          <li class="nav-item"><a class="nav-link" href="hotel/frontend/hotel.html"><i class="bi bi-building"></i> Hotels</a></li>
+          <li class="nav-item"><a class="nav-link" href="mietwagen/frontend/mietwagen.html"><i class="bi bi-car-front"></i> Mietwagen</a></li>
+          <li class="nav-item"><a class="nav-link" href="bewertung/frontend/bewertung.html"><i class="bi bi-chat-dots"></i> Bewertungen</a></li>
+          <li class="nav-item d-none" id="roleBadge"><a class="nav-link disabled" href="#"><span id="roleInfo"></span></a></li>
+          <li class="nav-item d-none" id="logoutNav"><a class="nav-link text-danger" href="#" id="logoutBtn"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
+        </ul>
+      </div>
     </div>
   </nav>
 
   <!-- Header -->
   <div class="header">
-    <h1 class="display-5">Buche deinen Traumurlaub</h1>
-    <p class="lead mb-0">mit Jet3Holiday – Einfach. Schnell. Sicher.</p>
+    <h1 class="display-4 fw-bold">Teile und plane deinen Urlaub</h1>
+    <p class="lead">Mit Jet3Holiday – einfach vernetzen & verreisen.</p>
   </div>
 
   <!-- Hauptinhalt -->
   <main class="container py-5">
     <div class="card p-4">
-      <!-- Loginbereich -->
+      <!-- Login -->
       <div id="loginSection">
         <h2 class="text-center mb-4">Login</h2>
         <form id="loginForm">
@@ -108,25 +119,21 @@
               Ich bin Admin
             </label>
           </div>
-          
-          <div class="d-grid mb-2">
-            <button type="submit" class="btn btn-secondary">Einloggen</button>
+          <div class="d-grid">
+            <button type="submit" class="btn btn-custom">Einloggen</button>
           </div>
         </form>
-        <div id="loginError" class="text-danger text-center"></div>
+        <div id="loginError" class="text-danger text-center mt-3"></div>
       </div>
 
-      <!-- Inhalt nach Login -->
+      <!-- Nach Login -->
       <div id="mainContent" style="display: none;">
-        <h2 class="text-center">Willkommen!</h2>
-        <p class="text-center">Du bist erfolgreich eingeloggt.</p>
-
+        <h2 class="text-center mb-4">Willkommen bei Jet3Holiday!</h2>
         <div class="d-grid gap-2">
-          <a href="bewertung/frontend/bewertung.html" class="btn btn-primary">Bewertung schreiben</a>
-          <a href="mietwagen/frontend/mietwagen.html" class="btn btn-info">Reiseangebote</a>
-          <a href="flugverbindung/frontend/flugverbindung.html" class="btn btn-warning">Kontakt</a>
-
-          <button id="logoutBtn" class="btn btn-danger mt-3">Logout</button>
+          <a href="flugverbindung/frontend/flugverbindung.html" class="btn btn-outline-primary">Flüge durchsuchen</a>
+          <a href="hotel/frontend/hotel.html" class="btn btn-outline-secondary">Hotel finden</a>
+          <a href="mietwagen/frontend/mietwagen.html" class="btn btn-outline-info">Mietwagen reservieren</a>
+          <a href="bewertung/frontend/bewertung.html" class="btn btn-outline-success">Bewertung schreiben</a>
         </div>
       </div>
     </div>
@@ -135,19 +142,16 @@
   <!-- Footer -->
   <footer>
     <div class="container">
-      <small>&copy; 2025 Jet3Holiday. Alle Rechte vorbehalten.</small>
+      <small>&copy; 2025 Jet3Holiday – Deine Reisecommunity.</small>
     </div>
   </footer>
 
-  <!-- Script -->
+  <!-- Scripts -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const token = localStorage.getItem("token");
-      if (token) {
-        showMainContent();
-      } else {
-        showLogin();
-      }
+      if (token) showMainContent();
+      else showLogin();
     });
 
     document.getElementById("loginForm").addEventListener("submit", async (e) => {
@@ -179,18 +183,14 @@
 
     function showMainContent() {
       const isAdmin = localStorage.getItem("isAdmin") === "true";
-      const roleText = isAdmin ? "Du bist als Admin eingeloggt." : "Du bist als Benutzer eingeloggt.";
+      const roleText = isAdmin ? "🛡️ Admin" : "👤 Benutzer";
+
       document.getElementById("roleInfo").textContent = roleText;
+      document.getElementById("roleBadge").classList.remove("d-none");
+      document.getElementById("logoutNav").classList.remove("d-none");
 
       document.getElementById("loginSection").style.display = "none";
       document.getElementById("mainContent").style.display = "block";
-
-      // Logout-Button erst jetzt im DOM
-      document.getElementById("logoutBtn").addEventListener("click", () => {
-        localStorage.removeItem("token");
-        localStorage.removeItem("isAdmin");
-        showLogin();
-      });
     }
 
     function showLogin() {
@@ -198,8 +198,15 @@
       document.getElementById("mainContent").style.display = "none";
       document.getElementById("loginForm").reset();
       document.getElementById("loginError").textContent = "";
-      document.getElementById("roleInfo").textContent = "";
+      document.getElementById("roleBadge").classList.add("d-none");
+      document.getElementById("logoutNav").classList.add("d-none");
     }
+
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      localStorage.removeItem("token");
+      localStorage.removeItem("isAdmin");
+      showLogin();
+    });
   </script>
 </body>
 </html>
