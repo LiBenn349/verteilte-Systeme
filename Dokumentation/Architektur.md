@@ -12,6 +12,7 @@ Die Anwendung „**mein-urlaub**“ besteht aus vier Microservices, die gemeinsa
 Jeder Service läuft unabhängig, stellt REST-APIs bereit und kann einzeln skaliert oder getestet werden.
 <br/>
 <br/>
+
 ## 2. Erklärung einzelner Services
 
 ### Bewertung-Service
@@ -48,6 +49,7 @@ Alle Services verwenden REST-APIs mit JSON als Austauschformat. Die Endpunkte si
 |                        | POST   | `/mietwagen`                   | Mietwagenangebot erstellen          |
 <br/>
 <br/>
+
 ## 4. Ordnerstruktur
 
 ```text
@@ -96,6 +98,7 @@ mein-urlaub/
 ```
 <br/>
 <br/>
+
 ## 5. Ablaufbeschreibung und Datenfluss
 
 1. Der Client sendet Anfragen über HTTP an die jeweiligen Services.
@@ -112,6 +115,7 @@ Client → POST /bewertungen → bewertung-service verarbeitet und speichert →
 ```
 <br/>
 <br/>
+
 ## 6. Entwurfsentscheidung
 
 - Microservice-Architektur: Ermöglicht eine klare Trennung der Verantwortlichkeiten. Jeder Service kann unabhängig entwickelt, getestet und deployed werden.
