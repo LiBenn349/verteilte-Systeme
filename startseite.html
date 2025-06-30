@@ -13,26 +13,40 @@
       font-family: 'Segoe UI', sans-serif;
       background: linear-gradient(135deg, #e0f7fa, #e1f5fe);
     }
-
+  
     .navbar {
       background-color: #0288d1 !important;
+      padding: 1rem 0;
+      font-size: 1.2rem;
     }
-
+  
     .navbar-brand {
       font-weight: bold;
-      font-size: 1.6rem;
+      font-size: 1.8rem;
       color: #fff !important;
     }
-
+  
     .navbar-nav .nav-link {
       color: #ffffff !important;
       font-weight: 500;
+      font-size: 1.2rem;
+      padding: 0.5rem 1rem;
     }
-
+  
     .navbar-nav .nav-link:hover {
       text-decoration: underline;
     }
-
+  
+    .promo-banner {
+      background: linear-gradient(90deg, #ffcc00, #ff9900);
+      color: #000;
+      font-weight: bold;
+      text-align: center;
+      padding: 1rem;
+      font-size: 1.25rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+  
     .header {
       text-align: center;
       padding: 60px 20px;
@@ -41,7 +55,7 @@
       color: white;
       text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
     }
-
+  
     .card {
       max-width: 450px;
       margin: auto;
@@ -49,50 +63,98 @@
       border-radius: 1rem;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
     }
-
+  
     .btn-custom {
       background-color: #0288d1;
       border: none;
+      font-size: 1.1rem;
+      padding: 0.6rem;
     }
-
+  
     .btn-custom:hover {
       background-color: #0277bd;
     }
-
+  
+    #mainContent .btn {
+      margin-bottom: 0.5rem;
+      font-size: 1.05rem;
+      padding: 0.6rem;
+    }
+  
     footer {
       background-color: #f1f3f5;
       padding: 15px 0;
       text-align: center;
       font-size: 0.9rem;
     }
+    .grid-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 1rem;
+  padding: 1rem 0;
+}
 
-    #mainContent .btn {
-      margin-bottom: 0.5rem;
-    }
+.option-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #e1f5fe;
+  border-radius: 12px;
+  padding: 1.2rem;
+  text-decoration: none;
+  color: #0288d1;
+  font-weight: bold;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  text-align: center;
+}
+
+.option-box i {
+  font-size: 3.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.option-box:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+}
+
   </style>
+  
 </head>
 
 <body>
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
-    <div class="container">
-      <a class="navbar-brand" href="#">Jet3Holiday</a>
+    <div class="container d-flex justify-content-between align-items-center">
+      <a class="navbar-brand me-auto" href="/startseite.html">Jet3Holiday</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navItems">
         <span class="navbar-toggler-icon"></span>
       </button>
-
-      <div class="collapse navbar-collapse" id="navItems">
-        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+  
+      <div class="collapse navbar-collapse justify-content-center" id="navItems">
+        <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
           <li class="nav-item"><a class="nav-link" href="flugverbindung/frontend/flugverbindung.html"><i class="bi bi-airplane"></i> Flüge</a></li>
           <li class="nav-item"><a class="nav-link" href="hotel/frontend/hotel.html"><i class="bi bi-building"></i> Hotels</a></li>
           <li class="nav-item"><a class="nav-link" href="mietwagen/frontend/mietwagen.html"><i class="bi bi-car-front"></i> Mietwagen</a></li>
           <li class="nav-item"><a class="nav-link" href="bewertung/frontend/bewertung.html"><i class="bi bi-chat-dots"></i> Bewertungen</a></li>
+        </ul>
+  
+        <!-- Rechts außen -->
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
           <li class="nav-item d-none" id="roleBadge"><a class="nav-link disabled" href="#"><span id="roleInfo"></span></a></li>
           <li class="nav-item d-none" id="logoutNav"><a class="nav-link text-danger" href="#" id="logoutBtn"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
         </ul>
       </div>
     </div>
   </nav>
+  
+
+  <!-- Werbebanner -->
+  <div class="promo-banner">
+    Aktuell sparen Sie 50 € pro Person – das macht 200 € für eine vierköpfige Familie! Jetzt buchen! 
+  </div>
 
   <!-- Header -->
   <div class="header">
@@ -115,9 +177,7 @@
           </div>
           <div class="form-check mb-3">
             <input class="form-check-input" type="checkbox" id="isAdmin">
-            <label class="form-check-label" for="isAdmin">
-              Ich bin Admin
-            </label>
+            <label class="form-check-label" for="isAdmin">Ich bin Admin</label>
           </div>
           <div class="d-grid">
             <button type="submit" class="btn btn-custom">Einloggen</button>
@@ -126,25 +186,40 @@
         <div id="loginError" class="text-danger text-center mt-3"></div>
       </div>
 
-      <!-- Nach Login -->
-      <div id="mainContent" style="display: none;">
-        <h2 class="text-center mb-4">Willkommen bei Jet3Holiday!</h2>
-        <div class="d-grid gap-2">
-          <a href="flugverbindung/frontend/flugverbindung.html" class="btn btn-outline-primary">Flüge durchsuchen</a>
-          <a href="hotel/frontend/hotel.html" class="btn btn-outline-secondary">Hotel finden</a>
-          <a href="mietwagen/frontend/mietwagen.html" class="btn btn-outline-info">Mietwagen reservieren</a>
-          <a href="bewertung/frontend/bewertung.html" class="btn btn-outline-success">Bewertung schreiben</a>
-        </div>
-      </div>
+<!-- Nach Login -->
+<div id="mainContent" style="display: none;">
+  <h2 class="text-center mb-4">Willkommen bei Jet3Holiday!</h2>
+  <div class="grid-options">
+    <a href="flugverbindung/frontend/flugverbindung.html" class="option-box">
+      <i class="bi bi-airplane"></i>
+      <span>Flüge</span>
+    </a>
+    <a href="hotel/frontend/hotel.html" class="option-box">
+      <i class="bi bi-building"></i>
+      <span>Hotels</span>
+    </a>
+    <a href="mietwagen/frontend/mietwagen.html" class="option-box">
+      <i class="bi bi-car-front"></i>
+      <span>Mietwagen</span>
+    </a>
+    <a href="bewertung/frontend/bewertung.html" class="option-box">
+      <i class="bi bi-chat-dots"></i>
+      <span>Bewertungen</span>
+    </a>
+  </div>
+</div>
+
     </div>
   </main>
 
   <!-- Footer -->
   <footer>
-    <div class="container">
+    <div class="container text-center py-3">
       <small>&copy; 2025 Jet3Holiday – Deine Reisecommunity.</small>
     </div>
   </footer>
+</body>
+
 
   <!-- Scripts -->
   <script>
@@ -210,4 +285,3 @@
   </script>
 </body>
 </html>
-
