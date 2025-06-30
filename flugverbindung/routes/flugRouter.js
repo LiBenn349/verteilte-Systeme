@@ -1,28 +1,20 @@
-//ALLE ENDPOINTS ZUM PRODUKT LADEN IN DIESER DATEI
+// Diese Datei enthält alle Endpunkte (Routen) für den Bewertungs-Microservice
 
+// -----------------------------
+// Benötigte Module einbinden
+// -----------------------------
 const express = require('express');
 const flugModel = require('../models/flugModel');
-
-
-
-//ACHTUNG --> hier keine "normale" express Iniitialisierung
+const jwt = require('jsonwebtoken');
+const SECRET = process.env.SECRET; // Das gleiche Secret wie im User-Service
 const router = express.Router();
 
 //router JSON fähig machen
 router.use(express.json());
 
-/*5 Endpoints erstellen
-    1. Alle Produkte lesen
-    2. Ein bestimmtes Produkt anhand seiner ID finden
-    3. Ein bestimmtes Produkt schreiben
-    4. Ein bestimmtes Produkt updaten
-    5. Ein bestimmtes Produkt löschen
-*/
-
-// middlewares/authMiddleware.js
-const jwt = require('jsonwebtoken');
-const SECRET = process.env.SECRET; // Das gleiche Secret wie im User-Service
-
+// --------------------------------------------------
+// Middleware: prüft, ob ein gültiger JWT-Token vorhanden ist
+// --------------------------------------------------
 function authMiddleware(req, res, next) {
     const authHeader = req.headers.authorization;
     if (!authHeader) return res.status(401).json({ message: 'Token fehlt' });
@@ -37,13 +29,45 @@ function authMiddleware(req, res, next) {
     }
 }
 
-
+// --------------------------------------------------
+// (Optional) Middleware: Nur Admins dürfen bestimmte Aktionen ausführen
+// --------------------------------------------------
 function checkAdmin(req, res, next) {
   if (!req.user || !req.user.isAdmin) {
     return res.status(403).json({ message: 'Nur Admins dürfen diese Aktion durchführen' });
   }
   next();
 }
+
+// --------------------------------------------------
+// Middleware: Holt eine Bewertung anhand ihrer ID aus der Datenbank
+// --------------------------------------------------
+async function getFlugByID(req, res, next){
+    let flug; //leere Produkthülle schaffen
+    try{
+
+        //das eine Prduct mit der entsprechenden ID finden --> die ID steht in der URL unter dem Parameter ID
+        flug = await flugModel.findById(req.params.id);
+
+        //Ergebnisse Unterscheiden 
+        //Falls kein Flug mit der ID gefunden werden kann, soll die Abfrage hier enden und die Response zum Client geschickt
+        if(flug == null){
+            return res.status(404).json({message: "Flug mit der ID " + req.params.id + " konnte nicht gefunden werden"});
+        }//Falls alles passt geht es nach dem Catch weiter
+
+
+    }catch(err){
+        res.status(500).json({message: err.message});
+    }
+
+    //Hier geht es weiter
+    res.flug = flug;
+    next();
+}
+
+// --------------------------------------------------
+// REST-API ENDPOINTS
+// --------------------------------------------------
 
 //    1. Alle Produkte lesen
 router.get('/', authMiddleware, async (req, res) => {
@@ -129,6 +153,7 @@ router.put('/:id', authMiddleware, checkAdmin, getFlugByID, async(req, res) => {
     }
 })
 
+// 5. Löschen eines Eintrags in der Datenbanbk
 router.delete('/:id', authMiddleware, checkAdmin, getFlugByID, async(req, res) => {
     try{
         const deletedFlug = await flugModel.deleteOne(res.flug) //unser Product aus der MiddleWare Funktion soll gelöscht werden
@@ -138,30 +163,9 @@ router.delete('/:id', authMiddleware, checkAdmin, getFlugByID, async(req, res) =
     }
 })
 
-
-//Middleware funktion
-async function getFlugByID(req, res, next){
-    let flug; //leere Produkthülle schaffen
-    try{
-
-        //das eine Prduct mit der entsprechenden ID finden --> die ID steht in der URL unter dem Parameter ID
-        flug = await flugModel.findById(req.params.id);
-
-        //Ergebnisse Unterscheiden 
-        //Falls kein Flug mit der ID gefunden werden kann, soll die Abfrage hier enden und die Response zum Client geschickt
-        if(flug == null){
-            return res.status(404).json({message: "Flug mit der ID " + req.params.id + " konnte nicht gefunden werden"});
-        }//Falls alles passt geht es nach dem Catch weiter
-
-
-    }catch(err){
-        res.status(500).json({message: err.message});
-    }
-
-    //Hier geht es weiter
-    res.flug = flug;
-    next();
-}
+// --------------------------------------------------
+// Export des Routers für die Verwendung in der Server-Datei
+// --------------------------------------------------
 
 //Router verfügbar mache
 module.exports = router;
