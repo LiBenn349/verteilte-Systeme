@@ -53,48 +53,58 @@ Alle Services verwenden REST-APIs mit JSON als Austauschformat. Die Endpunkte si
 ## 4. Ordnerstruktur
 
 ```text
-mein-urlaub/
-├── bewertung-service/
-│   ├── models/
-│   │   └── bewertung.js
-│   ├── routes/
-│   │   └── bewertungen.js
-│   ├── app.js  
-│   ├── server.js  
-│   ├── package.json  
-│   └── tests/
-│       └── bewertungen.rest
-├── hotel-service/
-│   ├── models/
-│   │   └── hotel.js
-│   ├── routes/
-│   │   └── hotels.js
-│   ├── app.js  
-│   ├── server.js  
-│   ├── package.json  
-│   └── tests/
-│       └── hotels.rest
-├── flugverbindung-service/
-│   ├── models/
-│   │   └── flugverbindung.js
-│   ├── routes/
-│   │   └── flugverbindungen.js
-│   ├── app.js  
-│   ├── server.js  
-│   ├── package.json  
-│   └── tests/
-│       └── flugverbindungen.rest
-└── mietwagen-service/
-    ├── models/
-    │   └── mietwagen.js
-    ├── routes/
-    │   └── mietwagen.js
-    ├── app.js  
-    ├── server.js  
-    ├── package.json  
-    └── tests/
-        └── mietwagen.rest
-        
+.
+├── Dokumentation
+│   ├── Architektur.md
+│   ├── Benutzer.md
+│   ├── Hosting.md
+│   └── Vorgehensweise.md
+├── bewertung
+│   ├── frontend
+│   │   └── bewertung.html
+│   ├── models
+│   │   └── bewertungModel.js
+│   ├── routes
+│   │   └── bewertungRouter.js
+│   ├── .env
+│   └── bewertungsServer.js
+├── flugverbindung
+│   ├── frontend
+│   │   └── flugverbindung.html
+│   ├── models
+│   │   └── flugModel.js
+│   ├── routes
+│   │   └── flugRouter.js
+│   ├── .env
+│   └── flugverbindungsServer.js
+├── hotel
+│   ├── frontend
+│   │   └── hotel.html
+│   ├── models
+│   │   └── hotelModel.js
+│   ├── routes
+│   │   └── hotelRouter.js
+│   ├── .env
+│   └── hotelServer.js
+├── mietwagen
+│   ├── frontend
+│   │   └── mietwagen.html
+│   ├── models
+│   │   └── mietwagenModel.js
+│   ├── routes
+│   │   └── mietwagenRouter.js
+│   ├── .env
+│   └── mietwagenServer.js
+├── user
+│   ├── models
+│   │   └── userModel.js
+│   ├── routes
+│   │   └── userRouter.js
+│   ├── .env
+│   └── userServer.js
+├── README.md
+└── startseite.html
+
 ```
 <br/>
 <br/>
