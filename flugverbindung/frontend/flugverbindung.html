@@ -1,27 +1,78 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
+  <!-- Zeichencodierung und Responsive Design -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Jet3Holiday – Flugverbindung</title>
+
+  <!-- Bootstrap CSS-Framework für Styling -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
+<!-- Bootstrap Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- Eigenes CSS für Farbgebung, Buttons, Layout etc. -->
   <style>
-    body {
-      background: linear-gradient(to right, #dbeafe, #e0f2fe);
+    /* Grundstil */
+    html, body {
+      height: 100%;
+      margin: 0;
       font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #e0f7fa, #e1f5fe);
     }
 
+    /* Navigationsleiste */
     .navbar {
-      background-color: #3b82f6;
+      background-color: #0288d1 !important;
+      padding: 1rem 0;
+      font-size: 1.2rem;
     }
 
-    .navbar-brand, .nav-link, .navbar-text {
-      color: white !important;
+    .navbar-brand {
+      font-weight: bold;
+      font-size: 1.8rem;
+      color: #fff !important;
+    }
+
+    .navbar-nav .nav-link {
+      color: #ffffff !important;
       font-weight: 500;
+      font-size: 1.2rem;
+      padding: 0.5rem 1rem;
     }
 
-    .nav-link:hover {
+    .navbar-nav .nav-link:hover {
       text-decoration: underline;
+    }
+
+
+    /* Headerbild mit Titel */
+    .header {
+      text-align: center;
+      padding: 60px 20px;
+      background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80') no-repeat center center;
+      background-size: cover;
+      color: white;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
+    }
+
+    /* Custom Button */
+    .btn-custom {
+      background-color: #0288d1;
+      border: none;
+      font-size: 1.1rem;
+      padding: 0.6rem;
+    }
+
+    .btn-custom:hover {
+      background-color: #0277bd;
+    }
+
+    /* Buttons im Hauptbereich */
+    #mainContent .btn {
+      margin-bottom: 0.5rem;
+      font-size: 1.05rem;
+      padding: 0.6rem;
     }
 
     h1 {
@@ -29,6 +80,8 @@
       margin-top: 1.5rem;
     }
 
+
+    /* Hintergrundboxen für Adminbereich und Flugliste */
     #adminSection, #flightsList {
       background-color: #ffffffd9;
       padding: 1.5rem;
@@ -42,6 +95,7 @@
       border-radius: 10px;
     }
 
+    /* Farbgestaltung für Buttons */
     .btn-primary {
       background-color: #2563eb;
       border-color: #2563eb;
@@ -55,6 +109,7 @@
     .btn-success {
       background-color: #10b981;
       border-color: #10b981;
+      
     }
 
     .btn-success:hover {
@@ -71,34 +126,59 @@
       background-color: #b91c1c;
       border-color: #b91c1c;
     }
+  
+
   </style>
 </head>
+
 <body>
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="/startseite.html">Jet3Holiday</a>
-      <div class="collapse navbar-collapse">
-        <ul class="navbar-nav me-auto">
-          <li class="nav-item"><a class="nav-link" href="flugverbindung.html">Flugverbindung</a></li>
-          <li class="nav-item"><a class="nav-link" href="/mietwagen/frontend/mietwagen.html">Mietwagen buchen</a></li>
-          <li class="nav-item"><a class="nav-link" href="/hotel/frontend/hotel.html">Hotel suchen</a></li>
-          <li class="nav-item"><a class="nav-link" href="/bewertung/frontend/bewertung.html">Bewertungen</a></li>
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+    <div class="container d-flex justify-content-between align-items-center">
+      <a class="navbar-brand me-auto" href="/startseite.html">Jet3Holiday</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navItems">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Navigation Links -->
+      <div class="collapse navbar-collapse justify-content-center" id="navItems">
+        <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+          <!-- Einzelne Nav-Links -->
+          <li class="nav-item"><a class="nav-link" href="flugverbindung.html"><i class="bi bi-airplane"></i> Flüge</a></li>
+          <li class="nav-item"><a class="nav-link" href="/hotel/frontend/hotel.html"><i class="bi bi-building"></i> Hotels</a></li>
+          <li class="nav-item"><a class="nav-link" href="/mietwagen/frontend/mietwagen.html"><i class="bi bi-car-front"></i> Mietwagen</a></li>
+          <li class="nav-item"><a class="nav-link" href="/bewertung/frontend/bewertung.html"><i class="bi bi-chat-dots"></i> Bewertungen</a></li>
         </ul>
-        <span class="navbar-text" id="roleInfo"></span>
-        <button id="logoutBtn" class="btn btn-danger btn-sm ms-3">Logout</button>
+
+        <!-- Rechte Seite der Navbar (Rolle + Logout) -->
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item d-none" id="roleBadge"><a class="nav-link disabled" href="/startseite.html"><span id="roleInfo"></span></a></li>
+          <li class="nav-item d-none" id="logoutNav"><a class="nav-link text-danger" href="/startseite.html" id="logoutBtn"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
+        </ul>
       </div>
     </div>
   </nav>
 
-  <div class="container mt-4">
-    <h1>Flugverbindungen</h1>
+    <!-- Header-Bereich -->
+    <div class="header">
+      <h1 class="display-4 fw-bold">Teile und plane deinen Urlaub</h1>
+      <p class="lead">Mit Jet3Holiday – einfach vernetzen & verreisen.</p>
+    </div>
 
-    <!-- Admin Bereich -->
+  <div class="container mt-4">
+    <h1 class="text-center">Flugverbindungen</h1>
+
+    <!-- Adminbereich zur Flugerstellung -->
     <div id="adminSection" style="display:none;">
       <button id="addFlightBtn" class="btn btn-success mb-3">Flug anlegen</button>
 
+      <!-- Formular zum Anlegen eines neuen Flugs -->
       <form id="addFlightForm" style="display:none;">
+        <!-- Eingabefelder für alle Flugdaten -->
+        <div class="mb-3">
+          <label for="serviceID" class="form-label">Service-ID</label>
+          <input type="text" class="form-control" id="serviceID" required>
+        </div>
         <div class="mb-3">
           <label for="flugNummer" class="form-label">Flugnummer</label>
           <input type="text" class="form-control" id="flugNummer" required>
@@ -112,24 +192,42 @@
           <input type="text" class="form-control" id="zielOrt" required>
         </div>
         <div class="mb-3">
+          <label for="flugGesellschaft" class="form-label">Fluggesellschaft</label>
+          <input type="text" class="form-control" id="flugGesellschaft" required>
+        </div>
+        <div class="mb-3">
+          <label for="beschreibung" class="form-label">Beschreibung</label>
+          <input type="text" class="form-control" id="beschreibung" required>
+        </div>
+        <div class="mb-3">
           <label for="preis" class="form-label">Preis (€)</label>
           <input type="number" class="form-control" id="preis" min="0" step="0.01" required>
         </div>
         <button type="submit" class="btn btn-primary">Flug anlegen</button>
       </form>
+      <!-- Nachricht nach Flugerstellung -->
       <div id="addFlightMsg" class="mt-2"></div>
     </div>
 
-    <!-- Flugliste -->
+    <!-- Hier wird die Liste der Flüge angezeigt -->
     <div id="flightsList" class="mt-4">
-      <!-- Flüge werden hier geladen -->
+      <!-- Flüge werden per JS dynamisch geladen -->
     </div>
   </div>
 
   <script>
+    // Beim Laden der Seite: Token prüfen
+    document.addEventListener("DOMContentLoaded", () => {
+      const token = localStorage.getItem("token");
+      if (token) showMainContent();
+      else showLogin();
+    });
+
+    // Wird nach dem Laden der Seite ausgeführt
     document.addEventListener('DOMContentLoaded', () => {
       const token = localStorage.getItem('token');
       if (!token) {
+        // Wenn kein Token vorhanden, zurück zur Startseite
         window.location.href = '/startseite.html';
         return;
       }
@@ -139,43 +237,61 @@
       roleInfo.textContent = isAdmin ? 'Admin' : 'Benutzer';
 
       if (isAdmin) {
+        // Admin-Bereich anzeigen, wenn Rolle = Admin
         document.getElementById('adminSection').style.display = 'block';
       }
 
+      // Logout-Funktion
       document.getElementById('logoutBtn').addEventListener('click', () => {
         localStorage.removeItem('token');
         localStorage.removeItem('isAdmin');
         window.location.href = '/startseite.html';
       });
 
+      // Formular für Fluganzeige umschalten
       document.getElementById('addFlightBtn').addEventListener('click', () => {
         const form = document.getElementById('addFlightForm');
         form.style.display = form.style.display === 'none' ? 'block' : 'none';
         document.getElementById('addFlightMsg').textContent = '';
       });
 
+      // Flug hinzufügen (Formular absenden)
       document.getElementById('addFlightForm').addEventListener('submit', async (e) => {
         e.preventDefault();
 
+        // Eingaben aus Formular sammeln
+        const serviceId = document.getElementById('serviceID').value.trim();
         const flugNummer = document.getElementById('flugNummer').value.trim();
         const startOrt = document.getElementById('startOrt').value.trim();
         const zielOrt = document.getElementById('zielOrt').value.trim();
+        const flugGesellschaft = document.getElementById('flugGesellschaft').value.trim();
+        const beschreibung = document.getElementById('beschreibung').value.trim();
         const preis = parseFloat(document.getElementById('preis').value);
 
-        if (!flugNummer || !startOrt || !zielOrt || isNaN(preis)) {
+        // Validierung der Eingaben
+        if (!serviceId || !flugNummer || !startOrt || !zielOrt || !flugGesellschaft || !beschreibung || isNaN(preis)) {
           document.getElementById('addFlightMsg').textContent = 'Bitte alle Felder korrekt ausfüllen.';
           document.getElementById('addFlightMsg').style.color = 'red';
           return;
         }
 
         try {
-          const response = await fetch('http://localhost:3000/fluege', {
+          // POST-Anfrage an das Backend
+          const response = await fetch('http://localhost:3000/', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
               'Authorization': 'Bearer ' + token
             },
-            body: JSON.stringify({ flugNummer, startOrt, zielOrt, preis })
+            body: JSON.stringify({
+              serviceId,
+              flugNummer,
+              startOrt,
+              zielOrt,
+              flugGesellschaft,
+              beschreibung,
+              preis
+            })
           });
 
           if (!response.ok) {
@@ -183,12 +299,11 @@
             throw new Error(errorData.message || 'Fehler beim Anlegen des Flugs');
           }
 
+          // Erfolgsmeldung + Formular zurücksetzen
           document.getElementById('addFlightMsg').textContent = 'Flug erfolgreich angelegt!';
           document.getElementById('addFlightMsg').style.color = 'green';
-
           document.getElementById('addFlightForm').reset();
           document.getElementById('addFlightForm').style.display = 'none';
-
           ladeFluege(token);
         } catch (err) {
           document.getElementById('addFlightMsg').textContent = err.message;
@@ -197,12 +312,14 @@
         }
       });
 
+      // Initiales Laden der Flüge
       ladeFluege(token);
     });
 
+    // Funktion zum Laden aller Flüge aus dem Backend
     async function ladeFluege(token) {
       try {
-        const res = await fetch('http://localhost:3000/fluege', {
+        const res = await fetch('http://localhost:3000/', {
           headers: {
             'Authorization': 'Bearer ' + token
           }
@@ -218,13 +335,14 @@
           return;
         }
 
+        // Ausgabe als Liste
         const ul = document.createElement('ul');
         ul.classList.add('list-group');
 
         fluege.forEach(flug => {
           const li = document.createElement('li');
           li.className = 'list-group-item';
-          li.textContent = `${flug.flugNummer} – ${flug.startOrt} → ${flug.zielOrt} (${flug.preis} €)`;
+          li.textContent = `${flug.flugNummer} – ${flug.startOrt} → ${flug.zielOrt} (${flug.preis} €) | ${flug.flugGesellschaft || 'Unbekannte Airline'} | ${flug.beschreibung || 'Keine Beschreibung'} | Service ID: ${flug.serviceId || 'n/a'}`;
           ul.appendChild(li);
         });
 
@@ -235,6 +353,36 @@
         console.error(err);
       }
     }
+
+        // Zeigt den Hauptinhalt (nach erfolgreichem Login)
+
+    function showMainContent() {
+      const isAdmin = localStorage.getItem("isAdmin") === "true";
+      const roleText = isAdmin ? "🛡️ Admin" : "👤 Benutzer";
+
+      document.getElementById("roleInfo").textContent = roleText;
+      document.getElementById("roleBadge").classList.remove("d-none");
+      document.getElementById("logoutNav").classList.remove("d-none");
+
+      document.getElementById("loginSection").style.display = "none";
+      document.getElementById("mainContent").style.display = "block";
+    }
+    // Zeigt das Login-Formular (z. B. beim Logout)
+    function showLogin() {
+      document.getElementById("loginSection").style.display = "block";
+      document.getElementById("mainContent").style.display = "none";
+      document.getElementById("loginForm").reset();
+      document.getElementById("loginError").textContent = "";
+      document.getElementById("roleBadge").classList.add("d-none");
+      document.getElementById("logoutNav").classList.add("d-none");
+    }
+
+        // Logout-Funktion
+        document.getElementById("logoutBtn").addEventListener("click", () => {
+      localStorage.removeItem("token");
+      localStorage.removeItem("isAdmin");
+      showLogin();
+    });
   </script>
 </body>
 </html>
