@@ -1,4 +1,4 @@
-# Jet2Holiday
+# Jet3Holiday
 
 ## Benötigte Installationen für fehlerlose Ausführung des Codes
 
