@@ -7,10 +7,10 @@ const bewertungsModel = new mongoose.Schema({
     required: true,
     enum: ['hotel', 'flugverbindung', 'mietwagen']
   },
-  serviceId: { //ID des bewerteten Objekts
+  serviceId: { //ID des bewerteten Objekts, die einzigartig sein muss
     type: mongoose.Schema.Types.ObjectId,
     required: true,
-    unique: true //Jedes Objekt sollte eine eindeutige ID haben
+    unique: true 
   },
   nutzerName: { //Name des Nutzers, der die Bewertung abgibt
     type: String,
@@ -34,5 +34,5 @@ const bewertungsModel = new mongoose.Schema({
   timestamps: true //Timestamp bei Erstellung für System
 });
 
-//Verfügbar machen des Schemas
+//Verfügbar machen des Schemas für andere Dateien
 module.exports = mongoose.model('bewertungsModel', bewertungsModel);
