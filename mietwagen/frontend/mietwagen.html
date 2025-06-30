@@ -1,27 +1,76 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
+  <!-- Zeichencodierung und Responsive Design -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Jet3Holiday – Mietwagen</title>
+
+  <!-- Bootstrap CSS-Framework für Styling -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
+<!-- Bootstrap Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- Eigenes CSS für Farbgebung, Buttons, Layout etc. -->
   <style>
-    body {
-      background: linear-gradient(to right, #dbeafe, #e0f2fe);
+    /* Grundstil */
+    html, body {
+      height: 100%;
+      margin: 0;
       font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #e0f7fa, #e1f5fe);
     }
 
+    /* Navigationsleiste */
     .navbar {
-      background-color: #3b82f6;
+      background-color: #0288d1 !important;
+      padding: 1rem 0;
+      font-size: 1.2rem;
     }
 
-    .navbar-brand, .nav-link, .navbar-text {
-      color: white !important;
+    .navbar-brand {
+      font-weight: bold;
+      font-size: 1.8rem;
+      color: #fff !important;
+    }
+
+    .navbar-nav .nav-link {
+      color: #ffffff !important;
       font-weight: 500;
+      font-size: 1.2rem;
+      padding: 0.5rem 1rem;
     }
 
-    .nav-link:hover {
+    .navbar-nav .nav-link:hover {
       text-decoration: underline;
+    }
+
+
+    /* Headerbild mit Titel */
+    .header {
+      text-align: center;
+      padding: 60px 20px;
+      background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80') no-repeat center center;
+      background-size: cover;
+      color: white;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
+    }
+
+
+
+    /* Buttons im Hauptbereich */
+    #mainContent .btn {
+      margin-bottom: 0.5rem;
+      font-size: 1.05rem;
+      padding: 0.6rem;
+    }
+
+    /* Kachel-Grid für Optionen nach Login */
+    .grid-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 1rem;
+      padding: 1rem 0;
     }
 
     h1 {
@@ -29,6 +78,8 @@
       margin-top: 1.5rem;
     }
 
+
+    /* Hintergrundboxen für Adminbereich und Flugliste */
     #adminSection, #carsList {
       background-color: #ffffffd9;
       padding: 1.5rem;
@@ -36,12 +87,8 @@
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 
-    form {
-      background-color: #f1f5f9;
-      padding: 1rem;
-      border-radius: 10px;
-    }
 
+    /* Farbgestaltung für Buttons */
     .btn-primary {
       background-color: #2563eb;
       border-color: #2563eb;
@@ -55,6 +102,7 @@
     .btn-success {
       background-color: #10b981;
       border-color: #10b981;
+      
     }
 
     .btn-success:hover {
@@ -74,25 +122,41 @@
   </style>
 </head>
 <body>
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="/startseite.html">Jet3Holiday</a>
-      <div class="collapse navbar-collapse">
-        <ul class="navbar-nav me-auto">
-          <li class="nav-item"><a class="nav-link" href="/flugverbindung/frontend/flugverbindung.html">Flugverbindung</a></li>
-          <li class="nav-item"><a class="nav-link" href="mietwagen.html">Mietwagen buchen</a></li>
-          <li class="nav-item"><a class="nav-link" href="/hotel/frontend/hotel.html">Hotel suchen</a></li>
-          <li class="nav-item"><a class="nav-link" href="/bewertung/frontend/bewertung.html">Bewertungen</a></li>
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+    <div class="container d-flex justify-content-between align-items-center">
+      <a class="navbar-brand me-auto" href="/startseite.html">Jet3Holiday</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navItems">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Navigation Links -->
+      <div class="collapse navbar-collapse justify-content-center" id="navItems">
+        <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+          <!-- Einzelne Nav-Links -->
+          <li class="nav-item"><a class="nav-link" href="/flugverbindung/frontend/flugverbindung.html"><i class="bi bi-airplane"></i> Flüge</a></li>
+          <li class="nav-item"><a class="nav-link" href="/hotel/frontend/hotel.html"><i class="bi bi-building"></i> Hotels</a></li>
+          <li class="nav-item"><a class="nav-link" href="mietwagen.html"><i class="bi bi-car-front"></i> Mietwagen</a></li>
+          <li class="nav-item"><a class="nav-link" href="/bewertung/frontend/bewertung.html"><i class="bi bi-chat-dots"></i> Bewertungen</a></li>
         </ul>
-        <span class="navbar-text" id="roleInfo"></span>
-        <button id="logoutBtn" class="btn btn-danger btn-sm ms-3">Logout</button>
+
+        <!-- Rechte Seite der Navbar (Rolle + Logout) -->
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item d-none" id="roleBadge"><a class="nav-link disabled" href="/startseite.html"><span id="roleInfo"></span></a></li>
+          <li class="nav-item d-none" id="logoutNav"><a class="nav-link text-danger" href="/startseite.html" id="logoutBtn"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
+        </ul>
       </div>
     </div>
   </nav>
 
+    <!-- Header-Bereich -->
+    <div class="header">
+      <h1 class="display-4 fw-bold">Teile und plane deinen Urlaub</h1>
+      <p class="lead">Mit Jet3Holiday – einfach vernetzen & verreisen.</p>
+    </div>
+
   <div class="container mt-4">
-    <h1>Mietwagen</h1>
+    <h1 class="text-center">Mietwagen</h1>
 
     <!-- Admin Bereich -->
     <div id="adminSection" style="display:none;">
@@ -135,27 +199,38 @@
   </div>
 </body>
 
-  <script>
+   <script>
+    // Beim Laden der Seite: Token prüfen
+    document.addEventListener("DOMContentLoaded", () => {
+      const token = localStorage.getItem("token");
+      if (token) showMainContent();
+      else showLogin();
+    });
+
+    // Wird nach dem Laden der Seite ausgeführt
     document.addEventListener('DOMContentLoaded', () => {
       const token = localStorage.getItem('token');
       if (!token) {
+        // Wenn kein Token vorhanden, zurück zur Startseite
         window.location.href = '/startseite.html';
         return;
       }
 
       const isAdmin = localStorage.getItem('isAdmin') === 'true';
-      document.getElementById('roleInfo').textContent = isAdmin ? 'Admin' : 'Benutzer';
+      const roleInfo = document.getElementById('roleInfo');
+      roleInfo.textContent = isAdmin ? 'Admin' : 'Benutzer';
 
       if (isAdmin) {
+        // Admin-Bereich anzeigen, wenn Rolle = Admin
         document.getElementById('adminSection').style.display = 'block';
       }
 
+      // Logout-Funktion
       document.getElementById('logoutBtn').addEventListener('click', () => {
         localStorage.removeItem('token');
         localStorage.removeItem('isAdmin');
         window.location.href = '/startseite.html';
       });
-
       document.getElementById('addCarBtn').addEventListener('click', () => {
         const form = document.getElementById('addCarForm');
         form.style.display = form.style.display === 'none' ? 'block' : 'none';
@@ -256,7 +331,37 @@
         console.error(err);
       }
     }
-  </script>
 
+    
+        // Zeigt den Hauptinhalt (nach erfolgreichem Login)
+
+    function showMainContent() {
+      const isAdmin = localStorage.getItem("isAdmin") === "true";
+      const roleText = isAdmin ? "🛡️ Admin" : "👤 Benutzer";
+
+      document.getElementById("roleInfo").textContent = roleText;
+      document.getElementById("roleBadge").classList.remove("d-none");
+      document.getElementById("logoutNav").classList.remove("d-none");
+
+      document.getElementById("loginSection").style.display = "none";
+      document.getElementById("mainContent").style.display = "block";
+    }
+    // Zeigt das Login-Formular (z. B. beim Logout)
+    function showLogin() {
+      document.getElementById("loginSection").style.display = "block";
+      document.getElementById("mainContent").style.display = "none";
+      document.getElementById("loginForm").reset();
+      document.getElementById("loginError").textContent = "";
+      document.getElementById("roleBadge").classList.add("d-none");
+      document.getElementById("logoutNav").classList.add("d-none");
+    }
+
+        // Logout-Funktion
+        document.getElementById("logoutBtn").addEventListener("click", () => {
+      localStorage.removeItem("token");
+      localStorage.removeItem("isAdmin");
+      showLogin();
+    });
+  </script>
 </body>
 </html>
