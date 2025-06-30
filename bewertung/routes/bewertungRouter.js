@@ -8,8 +8,7 @@ const express = require('express'); //Laden der Libraries
 const bewertungsModel = require('../models/bewertungModel');
 const jwt = require('jsonwebtoken');
 const SECRET = process.env.SECRET;
-//ACHTUNG --> hier keine "normale Express Initialisierung"
-const router = express.Router();
+const router = express.Router(); //Router-Objekt von Express erstellen anstatt einer normalen APP-Instanz
 
 //router JSON Fähig machen
 router.use(express.json());
