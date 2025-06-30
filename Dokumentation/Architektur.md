@@ -103,9 +103,6 @@ mein-urlaub/
 
 Beispiel (für eine Bewertung):
 ```
-plaintext
-Kopieren
-Bearbeiten
 Client → POST /bewertungen → bewertung-service verarbeitet und speichert → Antwort mit Status 201
 ```
 
