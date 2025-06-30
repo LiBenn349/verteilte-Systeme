@@ -76,6 +76,20 @@ router.get('/:id', authMiddleware, getHotelByID, (req, res) => {
     res.status(200).json(res.hotel);
 });
 
+// 2a. Alle Bewertungen zu einem bestimmten Service abrufen (z. B. für ein Hotel oder Flug)
+router.get(':ID', async (req, res) => {
+    try {
+        const bewertung = await bewertungsModel.find({ ID: req.params.ID });
+        if (bewertung) {
+            res.status(200).json(bewertung);
+        } else {
+            res.status(404).json({ message: "Keine Bewertungen für diesen Service gefunden" });
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
 //    3. Ein neues Hotel erstellen
 router.post('/', authMiddleware, checkAdmin, async (req, res) => {
     try {
