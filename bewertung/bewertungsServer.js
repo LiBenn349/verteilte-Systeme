@@ -1,10 +1,10 @@
-//Installierte Libraries express dotenv cors mongoose node-fetch
+//Installierte Libraries express dotenv cors mongoose node-fetch jsonwebtoken
 
-//Initialisierung Express
+//Initialisierung Express => Framework für den Aufbau von Webservern und APIs
 const express = require('express');
 const app = express();
 
-//Initialisierung Dotenv
+//Initialisierung Dotenv 
 require('dotenv').config();
 
 //Initialisierung Mongoose
@@ -29,11 +29,10 @@ const db = mongoose.connection; //Connection in der DB Konstante verfügbar mach
 db.on('error', (error) => console.error(error));//Falls ein Fehler bei der Verbindung auftritt, soll der Fehler in der Server console ausgegeben werden
 db.once('open',() => console.log("Server hat Verbindung zur DB " + dburl + " erfolgreich hergestellt")); //Öffnen der DB Verbindung und Ausgabe der Meldung, dass die Verbindung hergestellt wurde wenn alles erfolgreich ist
 
-
+// laden der Middleware und funktionen, um die API-Endpoints ansprechbar zu machen
 const bewertungRouter = require('./routes/bewertungRouter');//Router laden
 app.use('/', bewertungRouter);//Router unter dem vorne angegebenen Pfad verfügbar machen
-//const user = require('./routes/userRouter');//Router laden
-//app.use('/', user);//Router unter dem vorne angegebenen Pfad verfügbar machen
+
 
 //Server starten
 app.listen(port, () => {
