@@ -1,18 +1,22 @@
-//ALLE ENDPOINTS ZUM PRODUKT LANDEN IN DIESER DATEI 
+
+// Diese Datei enthält alle Endpunkte (Routen) für den Bewertungs-Microservice
+
+// -----------------------------
+// Benötigte Module einbinden
+// -----------------------------
 const express = require('express'); //Laden der Libraries 
 const bewertungsModel = require('../models/bewertungModel');
-
+const jwt = require('jsonwebtoken');
+const SECRET = process.env.SECRET;
 //ACHTUNG --> hier keine "normale Express Initialisierung"
 const router = express.Router();
 
 //router JSON Fähig machen
 router.use(express.json());
 
-
-// Middleware-Funktion für die Authentifizierung des Users
-const jwt = require('jsonwebtoken');
-const SECRET = process.env.SECRET; // Das gleiche Secret wie im User-Service
-
+// --------------------------------------------------
+// Middleware: prüft, ob ein gültiger JWT-Token vorhanden ist
+// --------------------------------------------------
 function authMiddleware(req, res, next) {
     const authHeader = req.headers.authorization;
     if (!authHeader) return res.status(401).json({ message: 'Token fehlt' });
@@ -27,7 +31,9 @@ function authMiddleware(req, res, next) {
     }
 }
 
-// Diese Middleware-Funktion überprüft, ob der angemeldete Benutzer auch Admin-Rechte hat
+// --------------------------------------------------
+// Middleware: Nur Admins dürfen bestimmte Aktionen ausführen
+// --------------------------------------------------
 function checkAdmin(req, res, next) {
   if (!req.user || !req.user.isAdmin) {
     return res.status(403).json({ message: 'Nur Admins dürfen diese Aktion durchführen' });
@@ -35,7 +41,9 @@ function checkAdmin(req, res, next) {
   next();
 }
 
-//Middleware-Funktion, die es möglich macht, einObjekt anhand seiner ObjectID zu finden
+// --------------------------------------------------
+// Middleware: Holt eine Bewertung anhand ihrer ID aus der Datenbank
+// --------------------------------------------------
 async function getRatingByID(req, res, next){
     let bewertung; //leere Bewertung schaffen
     try{
@@ -56,13 +64,9 @@ async function getRatingByID(req, res, next){
     next();
 }
 
-/*5 Endpoints erstellen, die von der API abgefragt werden können
-    1. Alle Bewertungen lesen
-    2. Eine bestimmte Bewertung anhand ihrer (ID) finden
-    3. Eine bestimmte Bewertung schreiben
-    4. Eine bestimmte Bewertung updaten (ID)
-    5. Eine bestimmte Bewertung löschen (ID)
-*/
+// --------------------------------------------------
+// REST-API ENDPOINTS
+// --------------------------------------------------
 
 // 1. Alle Bewertungen lesen
 router.get('/', async (req, res) => {
@@ -76,7 +80,6 @@ router.get('/', async (req, res) => {
         res.status(500).json({message: err.message});  //geben wir im Fehlerfall einen 500-Serverfehler aus, wenn keine Bewertungen gefunden werden
     }
 })
-
 
 // 2. Ein bestimmtes Rating anhand seiner (ID) finden
 router.get("/:id", authMiddleware, getRatingByID, (req,res) => {
@@ -171,4 +174,7 @@ router.delete('/:id', authMiddleware, getRatingByID, async(req, res) => {
     }
 })
 
+// --------------------------------------------------
+// Export des Routers für die Verwendung in der Server-Datei
+// --------------------------------------------------
 module.exports = router;
