@@ -8,15 +8,8 @@ const router = express.Router();
 //router JSON Fähig machen
 router.use(express.json());
 
-/*5 Endpoints erstellen
-    1. Alle Bewertungen lesen
-    2. Eine bestimmte Bewertung anhand ihrer (ID) finden
-    3. Eine bestimmte Bewertung schreiben
-    4. Eine bestimmte Bewertung updaten (ID)
-    5. Eine bestimmte Bewertung löschen (ID)
-*/
 
-// middlewares/authMiddleware.js
+// Middleware-Funktion für die Authentifizierung des Users
 const jwt = require('jsonwebtoken');
 const SECRET = process.env.SECRET; // Das gleiche Secret wie im User-Service
 
@@ -34,7 +27,7 @@ function authMiddleware(req, res, next) {
     }
 }
 
-
+// Diese Middleware-Funktion überprüft, ob der angemeldete Benutzer auch Admin-Rechte hat
 function checkAdmin(req, res, next) {
   if (!req.user || !req.user.isAdmin) {
     return res.status(403).json({ message: 'Nur Admins dürfen diese Aktion durchführen' });
@@ -42,21 +35,50 @@ function checkAdmin(req, res, next) {
   next();
 }
 
-//    1. Alle Bewertungen lesen
+//Middleware-Funktion, die es möglich macht, einObjekt anhand seiner ObjectID zu finden
+async function getRatingByID(req, res, next){
+    let bewertung; //leere Bewertung schaffen
+    try{
+        //das eine Bewertung mit der entsprechenden ID finden --> die ID steht in der URL unter dem Parameter ID
+        bewertung = await bewertungsModel.findById(req.params.id);
+        
+        //Falls keine Bewertung mit der ID gefunden werden kann, soll die Abfrage hier enden und die Response zum Client geschickt
+        if(bewertung == null){
+            return res.status(404).json({message: "Bewertung mit der ID " + req.params.id + " konnte nicht gefunden werden"});
+        }//Falls alles passt geht es nach dem Catch weiter
+
+    }catch(err){
+        res.status(500).json({message: err.message});
+    }
+
+    //Hier geht es weiter
+    res.bewertung = bewertung;
+    next();
+}
+
+/*5 Endpoints erstellen, die von der API abgefragt werden können
+    1. Alle Bewertungen lesen
+    2. Eine bestimmte Bewertung anhand ihrer (ID) finden
+    3. Eine bestimmte Bewertung schreiben
+    4. Eine bestimmte Bewertung updaten (ID)
+    5. Eine bestimmte Bewertung löschen (ID)
+*/
+
+// 1. Alle Bewertungen lesen
 router.get('/', async (req, res) => {
     try{
 
         //Alle Bewertungen vom Model finden
-        const bewertungen = await bewertungsModel.find();//Wir warten ab bis die Datenbank uns alle Bewertungen ausgibt
-        res.status(200).json(bewertungen);//senden die Bewertungen ans Frotend
+        const bewertungen = await bewertungsModel.find();  //Wir warten ab bis die Datenbank uns alle Bewertungen ausgibt
+        res.status(200).json(bewertungen);  //senden die Bewertungen ans Frotend
 
     }catch(err){
-        res.status(500).json({message: err.message});//geben wir im Fehlerfall einen 500-Serverfehler aus 
+        res.status(500).json({message: err.message});  //geben wir im Fehlerfall einen 500-Serverfehler aus, wenn keine Bewertungen gefunden werden
     }
 })
 
 
-//    2. Ein bestimmtes Rating anhand seiner (ID) finden
+// 2. Ein bestimmtes Rating anhand seiner (ID) finden
 router.get("/:id", authMiddleware, getRatingByID, (req,res) => {
     res.status(200).json(res.bewertung); //aus der MiddleWare Funktion getRatingByID wurde in res.bewertung bereits das eine bestimmtes Bewertung "reingeschrieben"
 })
@@ -139,6 +161,7 @@ router.put('/:id', authMiddleware, getRatingByID, async(req, res) => {
     }
 })
 
+// 5. Löschen eines Eintrags aus der Datenbank
 router.delete('/:id', authMiddleware, getRatingByID, async(req, res) => {
     try{
         const deletedBewertung = await bewertungsModel.deleteOne(res.bewertung) //unser Product aus der MiddleWare Funktion soll gelöscht werden
@@ -147,28 +170,5 @@ router.delete('/:id', authMiddleware, getRatingByID, async(req, res) => {
         res.status(500).json({message: error.message});
     }
 })
-
-async function getRatingByID(req, res, next){
-    let bewertung; //leere Bewertung schaffen
-    try{
-
-        //das eine Bewertung mit der entsprechenden ID finden --> die ID steht in der URL unter dem Parameter ID
-        bewertung = await bewertungsModel.findById(req.params.id);
-
-        //Ergebnisse Unterscheiden 
-        //Falls keine Bewertung mit der ID gefunden werden kann, soll die Abfrage hier enden und die Response zum Client geschickt
-        if(bewertung == null){
-            return res.status(404).json({message: "Bewertung mit der ID " + req.params.id + " konnte nicht gefunden werden"});
-        }//Falls alles passt geht es nach dem Catch weiter
-
-
-    }catch(err){
-        res.status(500).json({message: err.message});
-    }
-
-    //Hier geht es weiter
-    res.bewertung = bewertung;
-    next();
-}
 
 module.exports = router;
