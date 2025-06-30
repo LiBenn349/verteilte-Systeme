@@ -13,7 +13,7 @@ Für unserer Projekt hatten wir die Vorgabe, dieses als Microservice aufzubauen.
 4. Elemente Updaten(nur Admin)
 5. Elemente Löschen (nur Admin)
 
-> besonderheit bei dem Bewertungs-Microservice: User hat gleiche rechte wie Admin, damit User eigene Bewertungen erstellen, ändern und Löschen kann, da sonst der sinn eines Bewertungsservices nicht gegeben ist<br/>
+> Besonderheit bei dem Bewertungs-Microservice: User hat gleiche rechte wie Admin, damit User eigene Bewertungen erstellen, ändern und Löschen kann, da sonst der sinn eines Bewertungsservices nicht gegeben ist<br/>
 <br/>
 
 ## 3. Umsetzung
