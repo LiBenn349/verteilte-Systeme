@@ -30,7 +30,7 @@ function authMiddleware(req, res, next) {
 }
 
 // --------------------------------------------------
-// (Optional) Middleware: Nur Admins dürfen bestimmte Aktionen ausführen
+// Middleware: Nur Admins dürfen bestimmte Aktionen ausführen
 // --------------------------------------------------
 function checkAdmin(req, res, next) {
     if (!req.user || !req.user.isAdmin) {
