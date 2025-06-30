@@ -1,4 +1,4 @@
-# mein-Urlaub
+# Jet2Holiday
 
 ## Benötigte Installationen für fehlerlose Ausführung des Codes
 
