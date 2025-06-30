@@ -8,9 +8,9 @@ const mongoose = require('mongoose');
 
 const hotelModel = new mongoose.Schema({
     hotelID: {
-        type: mongoose.Schema.Types.ObjectId, //ID des Hotels, zu dem das Zimmer gehört
+        type: mongoose.Schema.Types.ObjectId, //ID des Hotels, zu dem das Zimmer gehört, eindeutig zuortbar
         required: true,
-        unique: true //Jedes Hotel sollte eine eindeutige ID haben
+        unique: true 
     },
     hotelName: { //Name des Hotels
         type: String,
@@ -36,12 +36,12 @@ const hotelModel = new mongoose.Schema({
         type: String,
         required: true
     },
-    anzahlFreieZimmer: {//Anzahl der freien Zimmer im Hotel
+    anzahlFreieZimmer: {//Anzahl der freien Zimmer im Hotel, beginnend bei 0, falls es ausgebucht ist
         type: Number,
         required: true,
-        min: 0 //Mindestanzahl an freien Zimmern
+        min: 0 
     },
-    zimmerBeschreibung: { //Beschreibung des Zimmers
+    zimmerBeschreibung: { //Beschreibung des Zimmers (Ausstattung, etc.)
         type: String,
         required: true
     },
@@ -52,14 +52,14 @@ const hotelModel = new mongoose.Schema({
     },
     haustierErlaubt: { //Haustiere erlaubt oder nicht
         type: Boolean,
-        default: false //Standardwert ist false, Haustiere nicht erlaubt
+        default: false 
     },
     preis: { //Preis des Zimmers pro Nacht
         type: Number,
         required: true
     }
 }, {
-  timestamps: true
+  timestamps: true // Zeitstempel im System
 });
 // verfügbar machen
 module.exports = mongoose.model('hotelModel', hotelModel);
