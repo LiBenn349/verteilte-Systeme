@@ -1,4 +1,4 @@
-# Hosting-Vorschlag für das Projekt „mein-urlaub“
+# Hosting-Vorschlag für das Projekt „jet2holiday“
 
 ## Ziel
 
