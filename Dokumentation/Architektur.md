@@ -31,6 +31,7 @@ Jeder Service läuft unabhängig, stellt REST-APIs bereit und kann einzeln skali
 - Verwaltet Daten zu verfügbaren Mietwagen.
 <br/>
 <br/>
+
 ## 3. Schnittstellenbeschreibung
 
 Alle Services verwenden REST-APIs mit JSON als Austauschformat. Die Endpunkte sind nach dem Schema aufgebaut:
