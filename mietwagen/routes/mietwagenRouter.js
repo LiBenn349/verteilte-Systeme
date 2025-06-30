@@ -1,22 +1,18 @@
-//ALLE ENDPOINTS ZUM PRODUKT LADEN IN DIESER DATEI
+// Diese Datei enthält alle Endpunkte (Routen) für den Hotel-Microservice
 
+// -----------------------------
+// Benötigte Module einbinden
+// -----------------------------
 const express = require('express');
 const mietwagenModel = require('../models/mietwagenModel');
-
-//ACHTUNG --> hier keine "normale" express Iniitialisierung
-const router = express.Router();
+const router = express.Router(); //ACHTUNG --> hier keine "normale" express Iniitialisierung
 
 //router JSON fähig machen
 router.use(express.json());
 
-/*5 Endpoints erstellen
-    1. Alle Produkte lesen
-    2. Ein bestimmtes Produkt anhand seiner ID finden
-    3. Ein bestimmtes Produkt schreiben
-    4. Ein bestimmtes Produkt updaten
-    5. Ein bestimmtes Produkt löschen
-*/
-
+// --------------------------------------------------
+// Middleware: prüft, ob ein gültiger JWT-Token vorhanden ist
+// --------------------------------------------------
 function authMiddleware(req, res, next) {
     const authHeader = req.headers.authorization;
     if (!authHeader) return res.status(401).json({ message: 'Token fehlt' });
@@ -31,7 +27,9 @@ function authMiddleware(req, res, next) {
     }
 }
 
-
+// --------------------------------------------------
+// (Optional) Middleware: Nur Admins dürfen bestimmte Aktionen ausführen
+// --------------------------------------------------
 function checkAdmin(req, res, next) {
   if (!req.user || !req.user.isAdmin) {
     return res.status(403).json({ message: 'Nur Admins dürfen diese Aktion durchführen' });
@@ -39,7 +37,40 @@ function checkAdmin(req, res, next) {
   next();
 }
 
-//    1. Alle Produkte lesen
+
+
+// --------------------------------------------------
+// Middleware: Holt ein Hotel anhand seiner ID aus der Datenbank
+// --------------------------------------------------
+async function getMietwagenByID(req, res, next){
+    let mietwagen; //leere Mietwagenhülle schaffen
+    try{
+
+        //das eine Mietwagen mit der entsprechenden ID finden --> die ID steht in der URL unter dem Parameter ID
+        mietwagen = await mietwagenModel.findById(req.params.id);
+
+        //Ergebnisse Unterscheiden
+        //Falls kein Mietwagen mit der ID gefunden werden kann, soll die Abfrage hier enden und die Response zum Client geschickt
+        if(mietwagen == null){
+            return res.status(404).json({message: "Mietwagen mit der ID " + req.params.id + " konnte nicht gefunden werden"});
+        }//Falls alles passt geht es nach dem Catch weiter
+
+
+    }catch(err){
+        res.status(500).json({message: err.message});
+    }
+
+    //Hier geht es weiter
+    res.mietwagen = mietwagen;
+    next();
+}
+
+
+// --------------------------------------------------
+// REST-API ENDPOINTS
+// --------------------------------------------------
+
+//  1. Alle Produkte lesen
 router.get('/', authMiddleware, async (req, res) => {
     try{
 
@@ -52,10 +83,24 @@ router.get('/', authMiddleware, async (req, res) => {
     }
 })
 
-//    2. Ein bestimmtes Produkt anhand seiner (ID) finden
+// 2. Ein bestimmtes Produkt anhand seiner (ID) finden
 router.get("/:id", authMiddleware, getMietwagenByID, (req,res) => {
     res.status(200).json(res.mietwagen); //aus der MiddleWare Funktion getMietwagenByID wurde in res.mietwagen bereits das eine bestimmte Produkt "reingeschrieben"
 })
+
+// 2a. Alle Bewertungen zu einem bestimmten Service abrufen 
+router.get(':ID', async (req, res) => {
+    try {
+        const bewertung = await bewertungsModel.find({ ID: req.params.ID });
+        if (bewertung) {
+            res.status(200).json(bewertung);
+        } else {
+            res.status(404).json({ message: "Keine Bewertungen für diesen Service gefunden" });
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
 
 //    3. Ein bestimmtes Produkt schreiben 
 router.post('/', authMiddleware, checkAdmin, async(req, res) => {
@@ -119,6 +164,7 @@ router.put('/:id', authMiddleware, checkAdmin, getMietwagenByID, async(req, res)
     }
 })
 
+// 5. Löschen eines Eintrags in der Datenbank
 router.delete('/:id',authMiddleware, checkAdmin, getMietwagenByID, async(req, res) => {
     try{
         const deletedMietwagen = await mietwagenModel.deleteOne(res.mietwagen) //unser Mietwagen aus der MiddleWare Funktion soll gelöscht werden
@@ -127,31 +173,6 @@ router.delete('/:id',authMiddleware, checkAdmin, getMietwagenByID, async(req, re
         res.status(500).json({message: error.message});
     }
 })
-
-
-//Middleware funktion
-async function getMietwagenByID(req, res, next){
-    let mietwagen; //leere Mietwagenhülle schaffen
-    try{
-
-        //das eine Mietwagen mit der entsprechenden ID finden --> die ID steht in der URL unter dem Parameter ID
-        mietwagen = await mietwagenModel.findById(req.params.id);
-
-        //Ergebnisse Unterscheiden
-        //Falls kein Mietwagen mit der ID gefunden werden kann, soll die Abfrage hier enden und die Response zum Client geschickt
-        if(mietwagen == null){
-            return res.status(404).json({message: "Mietwagen mit der ID " + req.params.id + " konnte nicht gefunden werden"});
-        }//Falls alles passt geht es nach dem Catch weiter
-
-
-    }catch(err){
-        res.status(500).json({message: err.message});
-    }
-
-    //Hier geht es weiter
-    res.mietwagen = mietwagen;
-    next();
-}
 
 //Router verfügbar mache
 module.exports = router; 
