@@ -1,4 +1,9 @@
-//Installierte Libraries express dotenv cors mongoose node-fetch jsonwebtoken
+// DIese Datei ist die Server-Datei für den  Bewertungs-Microservice
+
+// -----------------------------------------------
+// Verwendete Libraries installieren:
+// npm install express dotenv cors mongoose jsonwebtoken node-fetch
+// -----------------------------------------------
 
 //Initialisierung Express => Framework für den Aufbau von Webservern und APIs
 const express = require('express');
