@@ -113,7 +113,7 @@ Client → POST /bewertungen → bewertung-service verarbeitet und speichert →
 
 - Microservice-Architektur: Ermöglicht eine klare Trennung der Verantwortlichkeiten. Jeder Service kann unabhängig entwickelt, getestet und deployed werden.
 Node.js + Express: Schlanke, performante und weit verbreitete Lösung für RESTful APIs.
--REST-API: Verständlich und leicht konsumierbar für Clients.
--Tests mit .rest-Dateien: Schnelle Überprüfung der Schnittstellen mit REST-Clients wie VSCode Thunder Client.
--Modulare Struktur: Klare Trennung in routes, models, und zentrale Startdateien (server.js, app.js)
+- REST-API: Verständlich und leicht konsumierbar für Clients.
+- Tests mit .rest-Dateien: Schnelle Überprüfung der Schnittstellen mit REST-Clients wie VSCode Thunder Client.
+- Modulare Struktur: Klare Trennung in routes, models, und zentrale Startdateien (server.js, app.js)
 
