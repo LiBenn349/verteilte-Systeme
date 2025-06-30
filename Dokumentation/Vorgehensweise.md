@@ -38,13 +38,13 @@ Für unsere Abgabe haben wir ein Git Repository erstellt, ohne die zusätzlichen
 <br/>
 <br/>
 
-**4. Testen**
+### 4. Testen
 Wir haben vor allem Probleme mit der Datenbank-Verbindung und derm User. Nach dem fertigstellen des Backend haben wir vor allem die Server-Dateien getestet, damit wir sehen, das die Endpoint sowie die Datenbankenanbindung funktioniert. Dafür haben wir Postman und .rest-Dateein mit GET und POST methoden angewendet. Wir haben und da einfache Testfälle ausgedacht um auch mögliche Weitere Fehler zu finden und mit einer Exeption zu handeln. Dadurch konnten wir nach und nach das Backend zum laufen brinden, damit wir das Frontend vernünfig einzubinden und die Login und Authentifizierungsmethoden zu testen. Da man für JWT und eine erfolgreiche authetifizierung einen Token benötigt, welcher vm Frontend automatisch erstellt und dann zum Backen gesendet wird. Dadurch konnten wir den User mit alleen Funktionen erst nach erstellung des Backends testen. Das Debugging und Testing haben wir auch im Team zusammen gemacht, da so mögliche Fehlerquellen schneller affallen und mehr Randfälle getestet werden können.<br/>
 <br/>
 
-**5. Herausforderungen**
+### 5. Herausforderungen
 Bei der Erstellung des Projekts sind wir im Laufe der Bearbeitung auf verschiedene Probleme getroffen. Anfangs hatten wir vor allem Probleme damit im Backend die Datenbankverbindung zu bekommen und die Server zu starten. Da wiroft einen Fehler in der Router-Datei hatten und teile der Middleware falsch waren. Zum Ende des Projekts hatten wir viele Probleme mit dem User und der Authentifizierung, sowie mit der zusammenarbeit mit dem Frontend, da hier manche Endpoints nicht funktioniert haben. Wir hatten zeitweise das Problem, dass die Unterschiedlice Weiterleitung zu Admin-Frontend und User-Frontend nicht funktiont hat und man immer nur zum Admin gekommen ist.<br/>
 <br/>
 
-**6. Fazit** 
+### 6. Fazit
 Das Projekt kann noch erweitet werden. Neben weiteren Microservices, kann mann das suchsystem auch zu einem Buchungssystem erweitern. Momentan ist es auch noch möglich, sich einfach als Admin einzuloggen. Dafür müssen wir auch noch eine andere zuteilungsmethode bei der Regestrierung finden. Generell läst sich das Projekt sehr einfach erweitern, das dies hier ein Microservice-Projekt ist, das nur über das geneisame frntend und den User verbunden ist.
