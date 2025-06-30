@@ -101,34 +101,63 @@ router.post('/', authMiddleware, checkAdmin, async (req, res) => {
     }
 });
 
-//    4. Ein Hotel updaten
-router.put('/:id', authMiddleware, checkAdmin, getHotelByID, async (req, res) => {
-    try {
-        const fields = [
-            'hotelID', 'hotelName', 'straße', 'hausnummer', 'ort', 'postleitzahl',
-            'land', 'anzahlFreieZimmer', 'zimmerBeschreibung', 'zimmerTyp',
-            'haustierErlaubt', 'preis'
-        ];
-
-        let isUpdated = false;
-
-        fields.forEach(field => {
-            if (req.body[field] !== undefined) {
-                res.hotel[field] = req.body[field];
-                isUpdated = true;
-            }
-        });
-
-        if (!isUpdated) {
-            return res.status(400).json({ message: 'Keine gültigen Felder zum Updaten übergeben' });
+//    4. Ein bestimmtes Produkt updaten (ID)
+router.put('/:id', authMiddleware, checkAdin, getHotelByID, async(req, res) => {
+    try{
+        //Das Product mit der übergebenen ID steht in res.product durch die Middleware Funktion bereit
+        //Wir updaten es mit den Werten aus dem Request
+        if(req.body.hotelID){
+            res.hotel.hotelID = req.body.hotelID;
+        }
+        if(req.body.hotelName){
+            res.hotel.hotelName = req.body.hotelName;
+        }
+        if(req.body.straße){
+            res.hotel.straße = req.body.straße;
+        }
+        if(req.body.hausnummer){
+            res.hotel.hausnummer = req.body.hausnummer;
+        }
+        if(req.body.ort){
+            res.hotel.ort = req.body.ort;
+        }
+        if(req.body.postleitzahl){
+            res.hotel.postleitzahl = req.body.postleitzahl;
+        }
+        if(req.body.land){
+            res.hotel.land = req.body.land;
+        }
+        if(req.body.anzahlFreieZimmer){
+            res.hotel.anzahlFreieZimmer = req.body.anzahlFreieZimmer;
+        }
+        if(req.body.zimmerBeschreibung){
+            res.hotel.zimmerBeschreibung = req.body.zimmerBeschreibung;
+        }
+        if(req.body.zimmerTyp){
+            res.hotel.zimmerTyp = req.body.zimmerTyp;
+        }
+        if(req.body.haustierErlaubt){
+            res.hotel.haustierErlaubt = req.body.haustierErlaubt;
+        }
+        if(req.body.preis){
+            res.hotel.preis = req.body.preis;
         }
 
-        const updatedHotel = await res.hotel.save();
+        if(!req.body.hotelID && !req.body.hotelName && !req.body.straße && !req.body.hausnummer && !req.body.ort && !req.body.postleitzahl && !req.body.land && !req.body.anzahlFreieZimmer && !req.body.zimmerBeschreibung && !req.body.zimmerTyp && !req.body.haustierErlaubt && !req.body.preis){
+            res.status(400).json({message: 'Fehlerhafte Anfrage zum Updaten des Hotels'});
+        }
+       
+        //Wir schreiben dann die Veränderungen in die Datenbank
+        const updatedHotel = await res.hotel.save();//als Ergebnis von save erhalten wir hier das geupdatete Produkt aus der DB zurück
+
         res.status(201).json(updatedHotel);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
+
+    }catch(error){
+        res.status(500).json({message: error.message});
     }
-});
+})
+
+
 
 //    5. Ein Hotel löschen
 router.delete('/:id', authMiddleware, checkAdmin, getHotelByID, async (req, res) => {
