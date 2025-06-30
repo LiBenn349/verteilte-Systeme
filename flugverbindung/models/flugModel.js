@@ -2,53 +2,54 @@
 const mongoose = require('mongoose');
 
 const flugModel = new mongoose.Schema({
-  flugId: {
+  flugId: { // Jeder Flug bekommt eine eingeutige FlugID im System zugeteilt
     type: mongoose.Schema.Types.ObjectId,
     required: true,
-    unique: true // Jede Flugverbindung sollte eine eindeutige ID haben
+    unique: true 
   },
 
-  flugDatum: {
+  flugDatum: { // Dateum des Flugs
     type: Date,
     required: true
   },
 
-  flugUhrzeit: {
+  flugUhrzeit: { // Abflugzeit
     type: String,
     required: true
   },
 
-  flugDauer: {
+  flugDauer: { // Dauer des Flugs
     type: String,
     required: true
   },
 
-  startOrt: {
+  startOrt: { // Startflughafen
     type: String,
     required: true
   },
 
-  zielOrt: {
+  zielOrt: { // Zielflughafen
     type: String,
     required: true
   },
   
-  flugGesellschaft: {
+  flugGesellschaft: { // Fluggesellschaft, die den Flug macht
     type: Number,
     required: true
   },
 
-  beschreibung: {
+  beschreibung: { // Details zum Flug, Flugzeug oder Gesellschaft
     type: String,
     required: true
   },
 
-  preis: {
+  preis: { // Buchungspreis
     type: Number,
     required: true
   },
 }, {
-  timestamps: true
+  timestamps: true // Zeitstempel im System
 });
 
+//Verfügbar machen des Schemas für andere Dateien
 module.exports = mongoose.model('flugVerbindung', flugModel);
