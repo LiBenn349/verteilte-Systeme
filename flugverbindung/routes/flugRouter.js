@@ -87,6 +87,20 @@ router.get("/:id", authMiddleware, getFlugByID, (req,res) => {
     res.status(200).json(res.flug); //aus der MiddleWare Funktion getFlugByID wurde in res.flug bereits das eine bestimmte Produkt "reingeschrieben"
 })
 
+// 2a. Alle Bewertungen zu einem bestimmten Service abrufen (z. B. für ein Hotel oder Flug)
+router.get(':ID', async (req, res) => {
+    try {
+        const bewertung = await bewertungsModel.find({ ID: req.params.ID });
+        if (bewertung) {
+            res.status(200).json(bewertung);
+        } else {
+            res.status(404).json({ message: "Keine Bewertungen für diesen Service gefunden" });
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
 //    3. Ein bestimmtes Produkt schreiben 
 router.post('/', authMiddleware, checkAdmin, async(req, res) => {
     try{
